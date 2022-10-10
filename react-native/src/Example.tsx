@@ -3,24 +3,28 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 import SQLite from 'react-native-sqlite-storage'
 
-// XXX why don't the nice entrypoints work?
-import { ElectrifiedDatabase, electrify } from 'electric-sql/dist/drivers/react-native-sqlite-storage'
-import { Database } from 'electric-sql/dist/drivers/react-native-sqlite-storage/database'
+// XXX fix the entrypoints to e.g.: `electric-sql/react-native`
+import { electrify } from 'electric-sql/dist/drivers/react-native-sqlite-storage'
+import { Database, ElectrifiedDatabase } from 'electric-sql/dist/drivers/react-native-sqlite-storage/database'
 import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/dist/frameworks/react'
 
 import { data as migrationsData } from '../migrations'
 
 export const Example = () => {
-  const [ db, setDb ] = useState()
+  const [ db, setDb ] = useState<ElectrifiedDatabase>()
 
   useEffect(() => {
     const promisesEnabled = true
     SQLite.enablePromise(promisesEnabled)
 
-    SQLite.openDatabase('example4.db')
+    SQLite.openDatabase('example.db')
       .then((db: Database) => electrify(db, promisesEnabled, migrationsData))
       .then((db: ElectrifiedDatabase) => setDb(db))
-      .catch((err) => console.warn('ERR', err))
+      .catch((err: any) => {
+        console.warn('Error electrifying database')
+
+        throw err
+      })
   }, [])
 
   return (
@@ -31,8 +35,8 @@ export const Example = () => {
 }
 
 const ExampleComponent = () => {
-  const { results, error } = useElectricQuery('SELECT value FROM main.items')
-  const db = useElectric()
+  const { results, error } = useElectricQuery('SELECT value FROM items', [])
+  const db = useElectric() as ElectrifiedDatabase
 
   if (error !== undefined) {
     return (
@@ -52,13 +56,17 @@ const ExampleComponent = () => {
     const randomValue = Math.random().toString(16).substr(2)
 
     db.transaction((tx) => {
-      tx.executeSql('INSERT INTO items VALUES(?)', [randomValue])
+      tx.executeSql('INSERT INTO items VALUES(?)', [randomValue], () => {
+        db.electric.notifier.potentiallyChanged()
+      })
     })
   }
 
-  const clearItems = () => {
+  const clearItems = async () => {
     db.transaction((tx) => {
-      tx.executeSql('DELETE FROM items where true')
+      tx.executeSql('DELETE FROM items where true', undefined, () => {
+        db.electric.notifier.potentiallyChanged()
+      })
     })
   }
 
