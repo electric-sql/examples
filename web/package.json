@@ -2,7 +2,7 @@
   "version": "0.1.0",
   "name": "electric-sql-web-demo",
   "scripts": {
-    "build": "../spikes/esbuild/esbuild src.js --bundle --external:fs --format=esm --splitting --outdir=dist",
+    "build": "esbuild src.ts worker.js --bundle --external:fs --format=esm --splitting --outdir=dist",
     "serve": "npx lite-server"
   },
   "browser": {
@@ -11,10 +11,12 @@
   "dependencies": {
     "@aphro/absurd-sql": "^0.0.53",
     "@aphro/sql.js": "^1.7.0",
-    "electric-sql-ts": "file:.yalc/electric-sql-ts",
+    "electric-sql": "file:.yalc/electric-sql",
+    "fastestsmallesttextencoderdecoder": "^1.0.22",
     "lodash.throttle": "^4.1.1"
   },
   "devDependencies": {
+    "esbuild": "^0.15.10",
     "lite-server": "^2.6.1",
     "path-browserify": "^1.0.1"
   }
