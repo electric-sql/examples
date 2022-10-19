@@ -1,80 +1,84 @@
-import React, { useEffect, useState } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import React, {useEffect, useState} from 'react';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 
-import SQLite from 'react-native-sqlite-storage'
+import SQLite from 'react-native-sqlite-storage';
 
-// XXX fix the entrypoints to e.g.: `electric-sql/react-native`
-import { electrify } from 'electric-sql/dist/drivers/react-native-sqlite-storage'
-import { Database, ElectrifiedDatabase } from 'electric-sql/dist/drivers/react-native-sqlite-storage/database'
-import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/dist/frameworks/react'
+// Metro does not support package.json exports. Use resolver.
+// https://github.com/facebook/metro/issues/670
+import {electrify, ElectrifiedDatabase} from 'electric-sql/react-native';
+import {
+  ElectricProvider,
+  useElectric,
+  useElectricQuery,
+} from 'electric-sql/react';
 
-import { data as migrationsData } from '../migrations'
+import {data as migrationsData} from '../migrations';
 
 export const Example = () => {
-  const [ db, setDb ] = useState<ElectrifiedDatabase>()
+  const [db, setDb] = useState<ElectrifiedDatabase>();
 
   useEffect(() => {
-    const promisesEnabled = true
-    SQLite.enablePromise(promisesEnabled)
+    const promisesEnabled = true;
+    SQLite.enablePromise(promisesEnabled);
 
-    SQLite.openDatabase('example.db')
-      .then((db: Database) => electrify(db, promisesEnabled, migrationsData))
-      .then((db: ElectrifiedDatabase) => setDb(db))
+    SQLite.openDatabase({name: 'example.db'})
+      .then(sqlDb =>
+        electrify(sqlDb as any, promisesEnabled, migrationsData as any),
+      )
+      .then(edb => setDb(edb))
       .catch((err: any) => {
-        console.warn('Error electrifying database')
+        console.warn('Error electrifying database');
 
-        throw err
-      })
-  }, [])
+        throw err;
+      });
+  }, []);
 
   return (
     <ElectricProvider db={db}>
       <ExampleComponent />
     </ElectricProvider>
-  )
-}
+  );
+};
 
 const ExampleComponent = () => {
-  const { results, error } = useElectricQuery('SELECT value FROM items', [])
-  const db = useElectric() as ElectrifiedDatabase
+  const {results, error} = useElectricQuery('SELECT value FROM items', []);
+  const db = useElectric() as ElectrifiedDatabase;
 
   if (error !== undefined) {
     return (
       <View>
-        <Text style={styles.item}>
-          Error: { `${error}` }
-        </Text>
+        <Text style={styles.item}>Error: {`${error}`}</Text>
       </View>
-    )
+    );
   }
 
   if (db === undefined || results === undefined) {
-    return null
+    return null;
   }
 
   const addItem = () => {
-    const randomValue = Math.random().toString(16).substr(2)
+    const randomValue = Math.random().toString(16).substr(2);
 
-    db.transaction((tx) => {
+    db.transaction(tx => {
       tx.executeSql('INSERT INTO items VALUES(?)', [randomValue], () => {
-        db.electric.notifier.potentiallyChanged()
-      })
-    })
-  }
+        db.electric.notifier.potentiallyChanged();
+      });
+    });
+  };
 
   const clearItems = async () => {
-    db.transaction((tx) => {
+    db.transaction(tx => {
       tx.executeSql('DELETE FROM items where true', undefined, () => {
-        db.electric.notifier.potentiallyChanged()
-      })
-    })
-  }
+        db.electric.notifier.potentiallyChanged();
+      });
+    });
+  };
 
   return (
     <View>
       {results.map((item, index) => (
-        <Text key={ index } style={styles.item}>
-          Item: { item.value }
+        <Text key={index} style={styles.item}>
+          Item: {item.value}
         </Text>
       ))}
 
@@ -85,8 +89,8 @@ const ExampleComponent = () => {
         <Text style={styles.text}>Clear</Text>
       </Pressable>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   button: {
@@ -122,4 +126,4 @@ const styles = StyleSheet.create({
     letterSpacing: 0.25,
     color: 'white',
   },
-})
+});
