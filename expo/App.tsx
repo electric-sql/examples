@@ -15,16 +15,16 @@ export default () => {
 
   useEffect(() => {
     const odb = SQLite.openDatabase("example.db");
-    new Promise<void>((res) =>
-      electrify(odb as any, migrationsData as any)
+    const init = async () => {     
+      await electrify(odb as any, migrationsData as any)
         .then((db: ElectrifiedDatabase) => setDb(db))
         .catch((err) => {
           console.warn("Error electrifying database");
           console.log(JSON.stringify(err));
           throw err;
         })
-        .finally(() => res())
-    );
+      }
+    init();
   }, []);
 
   return (
