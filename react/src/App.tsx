@@ -4,18 +4,16 @@ import './App.css'
 import './style.css'
 
 import { initElectricSqlJs, Database, ElectrifiedDatabase } from "electric-sql/browser"
-import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/frameworks/react'
-
-import { data as migrationsData } from '../migrations'
+import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
 
 const Example = () => {
-  const [ db, setDb ] = useState<Database>()
+  const [ db, setDb ] = useState<ElectrifiedDatabase>()
   const worker = new Worker("./worker.js", { type: "module" });
 
   useEffect(() => {
     initElectricSqlJs(worker, {locateFile: (file: any) => `/${file}`})
       .then((SQL: any) => SQL.openDatabase('example.db'))
-      .then((db: Database) => setDb(db))
+      .then((db: ElectrifiedDatabase) => setDb(db))
   }, [])
 
   return (
@@ -47,12 +45,12 @@ const ExampleComponent = () => {
     const randomValue = Math.random().toString(16).substr(2)
 
     db.exec('INSERT INTO items VALUES(?)', [randomValue])
-    db.electric.notifier.potentiallyChanged()
+    db.electric.potentiallyChanged()
   }
 
   const clearItems = () => {
     db.exec('DELETE FROM items where true')
-    db.electric.notifier.potentiallyChanged()
+    db.electric.potentiallyChanged()
   }  
 
   return (
