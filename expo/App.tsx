@@ -3,20 +3,21 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import * as SQLite from "expo-sqlite";
 
-import { electrify } from "electric-sql/dist/drivers/expo-sqlite";
-import { ElectricProvider, useElectric, useElectricQuery } from "electric-sql/dist/frameworks/react";
+// Metro does not support package.json exports. Use resolver.
+// https://github.com/facebook/metro/issues/670
+import { ElectrifiedDatabase, electrify } from "electric-sql/expo";
+import { ElectricProvider, useElectric, useElectricQuery } from "electric-sql/react";
 
 import { data as migrationsData } from "./migrations";
-import { StatusBar } from "expo-status-bar";
 
-export default Example = () => {
-  const [db, setDb] = useState();
+export default () => {
+  const [db, setDb] = useState<ElectrifiedDatabase>();
 
   useEffect(() => {
     const odb = SQLite.openDatabase("example.db");
-    new Promise((res) =>
-      electrify(odb, migrationsData)
-        .then((db) => setDb(db))
+    new Promise<void>((res) =>
+      electrify(odb as any, migrationsData as any)
+        .then((db: ElectrifiedDatabase) => setDb(db))
         .catch((err) => {
           console.warn("Error electrifying database");
           console.log(JSON.stringify(err));
@@ -43,7 +44,7 @@ export default Example = () => {
 
 const ExampleComponent = () => {
   const { results, error } = useElectricQuery("SELECT value FROM items", []);
-  const db = useElectric();
+  const db = useElectric()  as ElectrifiedDatabase;; // FIXME
 
   if (error !== undefined) {
     return (
@@ -62,7 +63,7 @@ const ExampleComponent = () => {
 
     db.transaction((tx) => {
       tx.executeSql("INSERT INTO items VALUES(?)", [randomValue], () => {
-        db.electric.notifier.potentiallyChanged();
+        db.electric.potentiallyChanged();
       });
     });
   };
@@ -70,7 +71,7 @@ const ExampleComponent = () => {
   const clearItems = async () => {
     db.transaction((tx) => {
       tx.executeSql("DELETE FROM items where true", undefined, () => {
-        db.electric.notifier.potentiallyChanged();
+        db.electric.potentiallyChanged();
       });
     });
   };
