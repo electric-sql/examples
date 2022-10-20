@@ -1,3 +1,16 @@
+<a href="https://electric-sql.com">
+  <picture>
+    <source media="(prefers-color-scheme: dark)"
+        srcset="https://raw.githubusercontent.com/electric-sql/meta/main/identity/ElectricSQL-logo-light-trans.svg"
+    />
+    <source media="(prefers-color-scheme: light)"
+        srcset="https://raw.githubusercontent.com/electric-sql/meta/main/identity/ElectricSQL-logo-black.svg"
+    />
+    <img alt="ElectricSQL logo"
+        src="https://raw.githubusercontent.com/electric-sql/meta/main/identity/ElectricSQL-logo-black.svg"
+    />
+  </picture>
+</a>
 
 # ElectricSQL - Web example
 
