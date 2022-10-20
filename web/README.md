@@ -50,7 +50,7 @@ Open [localhost:3000](http://localhost:3000) in two different browsers (so they'
 
 ## Notes on the code
 
-Electric uses SQL.js in the browser with absurd-sql for persistence. This runs in a web worker (which we also use to keep background replication off the main thread). As a result, the electrified db client provides an asynchronous version of a subset of the SQL.js driver interface.
+Electric uses SQL.js in the browser with absurd-sql for persistence. This runs in a web worker (which we also use to keep background replication off the main thread). As a result, the electrified db client provides an asynchronous version of a subset of the [SQL.js driver interface](https://sql.js.org/documentation).
 
 The main code to look at is in [`./src/App.tsx`](./src/App.tsx).
 
@@ -74,9 +74,7 @@ export const ElectrifiedExample = () => {
 }
 ```
 
-This spins up a web worker, initialises the persistence machinery, opens an electrified database client and passes it to the application using the React Context API.
-
-Components can then use the database client as normal, with automatic reactivity and replication baked in:
+This spins up a web worker, initialises the persistence machinery, opens an electrified database client and passes it to the application using the React Context API. Components can then use the [`useElectric`](https://electric-sql.com/docs/usage/frameworks#useelectric-hook) and [`useElectricQuery`](https://electric-sql.com/docs/usage/frameworks#useelectricquery-hook) to access the database client and bind reactive queries to the component state.
 
 ```tsx
 const ExampleComponent = () => {
