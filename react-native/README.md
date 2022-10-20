@@ -1,44 +1,76 @@
+# React Native example
 
-# Electric SQL React Native Demo
+This example shows how create a React Native application backed by an electrified SQLite database, synching data across devices through the Cloud.
 
-This is a Local-first SQL demo app for React Native, using the [react-native-electric-sql](https://github.com/vaxine-io/react-native-electric-sql) library.
+For this example we uses an electrified `react-native-sqlite-storage` driver to access SQLite on the device. The process is simple: open the database, electrify it, and use it as normal. Electric will detect database changes and synch them through the Cloud.
 
-There is a single React Native `App.js` component that runs two demos:
+```jsx
+export const ElectrifiedExample = () => {
+  const [db, setDb] = useState<ElectrifiedDatabase>();
 
-1. `ElectricDemo` -- shows reactive SQL queries with active data sync using a WebSQL compliant driver
-2. `TypeORMDemo` -- shows the same, using an ORM (specifically TypeORM) rather than the raw SQL driver
+  useEffect(() => {
+    const promisesEnabled = true;
+    SQLite.enablePromise(promisesEnabled);
 
-## Usage
+    SQLite.openDatabase({name: 'example.db'})
+      .then((sqlDb: SQLiteDatabase) =>
+        electrify(sqlDb as any, promisesEnabled, config as any),
+      )
+      .then((edb: ElectrifiedDatabase) => setDb(edb))
+      .catch((err: Error) => {
+        console.warn('Error electrifying database');
 
-The example show the use of `ElectricProvider` in App.js. This should be included once, as the root element of your React app. This provides a configured Electric SQL Database client, which uses a single, shared database connection.
+        throw err;
+      });
+  }, []);
 
-The shared database connection handle ties into the SQLite:
-
-- [update hook](https://www.sqlite.org/c3ref/update_hook.html) for change notifications (enabling live queries); and
-- [session machinery](https://www.sqlite.org/sessionintro.html) for replication (enabling active-active cloud sync)
-
-The two demos show how to use the configured client to read and write data, including binding live queries to your reactive components that update whenever data is changed -- either locally, or by another user/device via the active-active replication.
-
-## Targets
-
-It's iOS only, because the `react-native-electric-sql` dependency is currently iOS only. The typescript config is to support TypeORM with its decorated entities (it's not mandatory to use Typescript to use Electric SQL).
-
-## Install
-
-```sh
-yarn
-cd ios && pod install && cd ..
+  return (
+    <ElectricProvider db={db}>
+      <Example />
+    </ElectricProvider>
+  );
+};
 ```
 
-## Run
+To try out the example, you can run the application from ElectricSQL hosted service, or use a local development cluster. To launch the cluster you will need Makefile and Docker:
 
-```sh
-yarn run ios
+```bash
+ git clone https://github.com/electric-sql/electric
+ cd electric
+make start_dev_env && make deps compile shell
+
 ```
 
-Or open `ios/ElectricSQLDemo.xcworkspace` in XCode.
+You can tear down all containers with `make stop_dev_env`.
 
-## Develop
+**Note**: you’ll notice that the scripts launches two Antidote clusters and a pair of Postgres instances. This is a lot more than what we actually need for this example.
 
-If using this to drive `react-native-electric-sql` in development, `yalc` is a
-useful tool to link the local dependency as per [this article](https://www.viget.com/articles/how-to-use-local-unpublished-node-packages-as-project-dependencies/).
+Now, clone this project and install it:
+
+```bash
+ git clone https://github.com/electric-sql/examples
+ cd examples/react-native
+ yarn
+```
+
+You can edit ElectricSQL [configurations](https://electric-sql/docs/usage/configure) in `satellite-config.js`:
+
+```javascript
+const config = {
+  app: 'example-app',
+  migrations: migrationsData,
+};
+```
+
+When running your application from Electric service, edit `app` to match your application name.
+When running Electric yourself, you can set `url` to override the location of the service ( default is "http://localhost:5133").
+
+Run the application on the simulator or the device
+
+```bash
+ yarn run ios
+```
+
+Go ahead and try the [web](https://github.com/electric-sql/examples/tree/main/web) example and see data replication across device and browser, without any extra code to handle replication.
+
+We are launching our hosted service soon. You can join the [waitlist](https://console.electric-sql.com/join/waitlist) to get early access.

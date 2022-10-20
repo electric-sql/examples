@@ -1,21 +1,31 @@
 {
-  "version": "0.1.0",
-  "name": "electric-sql-web-demo",
+  "name": "react",
+  "version": "1.0.0",
+  "main": "builder.js",
+  "author": "Valter Balegas",
+  "license": "MIT",
   "scripts": {
-    "build": "../spikes/esbuild/esbuild src.js --bundle --external:fs --format=esm --splitting --outdir=dist",
-    "serve": "npx lite-server"
-  },
-  "browser": {
-    "path": "path-browserify"
+    "build": "node builder.js",
+    "build-prod": "NODE_ENV=production node builder.js",
+    "start": "npx lite-server --baseDir=dist"
   },
   "dependencies": {
     "@aphro/absurd-sql": "^0.0.53",
     "@aphro/sql.js": "^1.7.0",
-    "electric-sql-ts": "file:.yalc/electric-sql-ts",
-    "lodash.throttle": "^4.1.1"
+    "base-64": "^1.0.0",
+    "electric-sql": "^0.2.0",
+    "fs-extra": "^10.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "@types/live-server": "^1.2.1",
+    "@types/node": "^16.9.1",
+    "@types/react": "^17.0.20",
+    "@types/react-dom": "^17.0.9",
+    "esbuild": "^0.12.26",
+    "esbuild-plugin-inline-image": "^0.0.8",
     "lite-server": "^2.6.1",
-    "path-browserify": "^1.0.1"
+    "typescript": "^4.4.3"
   }
 }

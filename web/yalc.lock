@@ -1,9 +1,0 @@
-{
-  "version": "v1",
-  "packages": {
-    "electric-sql-ts": {
-      "signature": "8d5deda223d24e34cd74052e0d46baab",
-      "file": true
-    }
-  }
-}
