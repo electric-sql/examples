@@ -14,29 +14,82 @@
 
 # ElectricSQL - React Native example
 
-This example shows how create a React Native application backed by an electrified SQLite database, synching data across devices through the Cloud.
+This is an example mobile app using [React Native](https://reactnative.dev) with the [react-native-sqlite-storage](https://www.npmjs.com/package/react-native-sqlite-storage) driver.
 
-For this example we uses an electrified `react-native-sqlite-storage` driver to access SQLite on the device. The process is simple: open the database, electrify it, and use it as normal. Electric will detect database changes and synch them through the Cloud.
+## Pre-reqs
 
-```jsx
+See the React Native CLI Quickstart section at [reactnative.dev/docs/environment-setup](https://reactnative.dev/docs/environment-setup).
+
+## Install
+
+Clone this repo and change directory into this folder:
+
+```sh
+git clone https://github.com/electric-sql/examples
+cd examples/react-native
+```
+
+Install the dependencies, either using Yarn:
+
+```sh
+yarn
+```
+
+Or using npm:
+
+```sh
+npm install
+```
+
+You may want to also check the [install section of the react-native-sqlite-storage driver README](https://github.com/andpor/react-native-sqlite-storage#installation) and e.g.: install the [pods](https://cocoapods.org):
+
+```sh
+cd ios && pod install && cd ..
+```
+
+## Configure
+
+As a local-first system, ElectricSQL defaults to working without a backend. So you can run this example application without connecting to a replication service. However, to run with replication working, you'll need to configure a backend to connect to. The simplest way is to [sign up to ElectricSQL](https://console.electric-sql.com/auth/signup) and create an application. This will give you a globally unique `app` slug. Paste this into your [application config](https://electric-sql.com/docs/usage/configure) in [`./electric-config.js`](./electric-config.js).
+
+Alternatively, see [these instructions](https://github.com/electric-sql/examples#running-the-backend-locally) to run and connect to the backend locally.
+
+## Run
+
+Run in the Android simulator:
+
+```sh
+yarn run android
+```
+
+Run in the iOS simulator:
+
+```sh
+yarn run ios
+```
+
+Or open in Xcode:
+
+```sh
+open ios/ElectricSQLExample.xcworkspace
+```
+
+## Notes on the code
+
+The main code to look at is in [`./src/Example.tsx`](./src/Example.tsx).
+
+```tsx
 export const ElectrifiedExample = () => {
   const [db, setDb] = useState<ElectrifiedDatabase>();
 
   useEffect(() => {
-    const promisesEnabled = true;
-    SQLite.enablePromise(promisesEnabled);
-
-    SQLite.openDatabase({name: 'example.db'})
-      .then((sqlDb: SQLiteDatabase) =>
-        electrify(sqlDb as any, promisesEnabled, config as any),
-      )
-      .then((edb: ElectrifiedDatabase) => setDb(edb))
-      .catch((err: Error) => {
-        console.warn('Error electrifying database');
-
-        throw err;
-      });
+    SQLite.openDatabase('example.db')
+      .then((db: Database) => electrify(db, promisesEnabled, config))
+      .then((db: ElectrifiedDatabase) => setDb(db))
   }, []);
+
+  if (db === undefined) {
+    return null
+  }
 
   return (
     <ElectricProvider db={db}>
@@ -46,45 +99,58 @@ export const ElectrifiedExample = () => {
 };
 ```
 
-To try out the example, you can run the application from ElectricSQL hosted service, or use a local development cluster. To launch the cluster you will need Makefile and Docker:
+This pens an electrified database client and passes it to the application using the React Context API. Components can then use the [`useElectric`](https://electric-sql.com/docs/usage/frameworks#useelectric-hook) and [`useElectricQuery`](https://electric-sql.com/docs/usage/frameworks#useelectricquery-hook) to access the database client and bind reactive queries to the component state.
 
-```bash
- git clone https://github.com/electric-sql/electric
- cd electric
-make start_dev_env && make deps compile shell
+```tsx
+const ExampleComponent = () => {
+  const {results, error} = useElectricQuery('SELECT value FROM items', []);
+  const db = useElectric() as ElectrifiedDatabase;
 
-```
+  if (error !== undefined) {
+    return (
+      <View>
+        <Text style={styles.item}>Error: {`${error}`}</Text>
+      </View>
+    );
+  }
 
-You can tear down all containers with `make stop_dev_env`.
+  if (results === undefined) {
+    return null;
+  }
 
-**Note**: you’ll notice that the scripts launches two Antidote clusters and a pair of Postgres instances. This is a lot more than what we actually need for this example.
+  const addItem = () => {
+    const randomValue = Math.random().toString(16).substr(2);
 
-Now, clone this project and install it:
+    db.transaction(tx => {
+      tx.executeSql('INSERT INTO items VALUES(?)', [randomValue]);
+    });
+  };
 
-```bash
- git clone https://github.com/electric-sql/examples
- cd examples/react-native
- yarn
-```
+  const clearItems = async () => {
+    db.transaction(tx => {
+      tx.executeSql('DELETE FROM items where true', undefined);
+    });
+  };
 
-You can edit ElectricSQL [configurations](https://electric-sql/docs/usage/configure) in `satellite-config.js`:
+  return (
+    <View>
+      {results.map((item, index) => (
+        <Text key={index} style={styles.item}>
+          Item: {item.value}
+        </Text>
+      ))}
 
-```javascript
-const config = {
-  app: 'example-app',
-  migrations: migrationsData,
+      <Pressable style={styles.button} onPress={addItem}>
+        <Text style={styles.text}>Add</Text>
+      </Pressable>
+      <Pressable style={styles.button} onPress={clearItems}>
+        <Text style={styles.text}>Clear</Text>
+      </Pressable>
+    </View>
+  );
 };
 ```
 
-When running your application from Electric service, edit `app` to match your application name.
-When running Electric yourself, you can set `url` to override the location of the service ( default is "http://localhost:5133").
+## More information
 
-Run the application on the simulator or the device
-
-```bash
- yarn run ios
-```
-
-Go ahead and try the [web](https://github.com/electric-sql/examples/tree/main/web) example and see data replication across device and browser, without any extra code to handle replication.
-
-We are launching our hosted service soon. You can join the [waitlist](https://console.electric-sql.com/join/waitlist) to get early access.
+See the [documentation](https://electric-sql.com/docs) and [community guidelines](https://github.com/electric-sql/meta). If you need help [let us know on Discord](https://discord.gg/B7kHGwDcbj).
