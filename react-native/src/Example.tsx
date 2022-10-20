@@ -19,10 +19,11 @@ export const ElectrifiedExample = () => {
 
   useEffect(() => {
     const init = async () => {
-      const original = SQLite.openDatabase({name: 'example324332233.db'}) as unknown as Database;
+      const original = await SQLite.openDatabase({name: 'example.db'}) as unknown as Database;
       const opts = config as any
 
-      setDb(await electrify(original, promisesEnabled, opts))
+      const electrified = await electrify(original, promisesEnabled, opts)
+      setDb(electrified)
     }
 
     init();

@@ -12,9 +12,14 @@ export const ElectrifiedExample = () => {
   const [ db, setDb ] = useState<ElectrifiedDatabase>()
 
   useEffect(() => {
-    initElectricSqlJs(worker, {locateFile: (file: string) => `/${file}`})
-      .then((SQL) => SQL.openDatabase('example.db'))
-      .then((db) => setDb(db))
+    const init = async () => {
+      const SQL = await initElectricSqlJs(worker, {locateFile: (file: string) => `/${file}`})
+      const electrified = await SQL.openDatabase('example.db')
+
+      setDb(electrified)
+    }
+
+    init();
   }, [])
 
   return (
