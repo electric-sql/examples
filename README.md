@@ -18,9 +18,9 @@ This repo contains example applications for [ElectricSQL](https://electric-sql.c
 
 See the sub folders for the actual applications:
 
-- [isomorphic](./isomorphic) illustrates an isomorphic web app with server side rendering
-- [react-native](./react-native) React Native demo app
 - [web](./web) web browser demo app
+- [react-native](./react-native) React Native demo app
+- [expo](./expo) Expo demo app
 
 ## More information
 
