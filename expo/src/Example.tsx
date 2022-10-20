@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Pressable, Text, View} from 'react-native';
 
-import SQLite, {SQLiteDatabase} from 'react-native-sqlite-storage';
+import * as SQLite from "expo-sqlite";
 
 // Metro does not support package.json exports. Use resolver.
 // https://github.com/facebook/metro/issues/670
-import {electrify, ElectrifiedDatabase} from 'electric-sql/react-native';
+import {electrify, ElectrifiedDatabase} from 'electric-sql/expo';
 import {
   ElectricProvider,
   useElectric,
@@ -20,19 +20,17 @@ export const ElectrifiedExample = () => {
   const [db, setDb] = useState<ElectrifiedDatabase>();
 
   useEffect(() => {
-    const promisesEnabled = true;
-    SQLite.enablePromise(promisesEnabled);
-
-    SQLite.openDatabase({name: 'example.db'})
-      .then((sqlDb: SQLiteDatabase) =>
-        electrify(sqlDb as any, promisesEnabled, config as any),
-      )
-      .then((edb: ElectrifiedDatabase) => setDb(edb))
-      .catch((err: Error) => {
-        console.warn('Error electrifying database');
-
-        throw err;
-      });
+    const odb = SQLite.openDatabase('example.db');
+    const init = async () => {     
+      await electrify(odb as any, config as any)
+        .then((db: ElectrifiedDatabase) => setDb(db))
+        .catch((err) => {
+          console.warn("Error electrifying database");
+          console.log(JSON.stringify(err));
+          throw err;
+        })
+      }
+    init();
   }, []);
 
   return (

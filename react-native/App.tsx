@@ -1,13 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React, {type PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -19,15 +9,9 @@ import {
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
 
-import { Example } from './src/Example'
+import {ElectrifiedExample} from './src/Example';
 
 const Section: React.FC<
   PropsWithChildren<{
@@ -81,7 +65,7 @@ const App = () => {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="ElectricSQL">
-            <Example />
+            <ElectrifiedExample />
           </Section>
         </View>
       </ScrollView>

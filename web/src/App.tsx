@@ -3,27 +3,27 @@ import logo from './logo.svg'
 import './App.css'
 import './style.css'
 
-import { initElectricSqlJs, ElectrifiedDatabase } from "electric-sql/browser"
+import { initElectricSqlJs, ElectrifiedDatabase} from "electric-sql/browser"
 import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
 
-const ElectrifiedComponent = () => {
+const ElectrifiedExampleComponent = () => {
   const [ db, setDb ] = useState<ElectrifiedDatabase>()
   const worker = new Worker("./worker.js", { type: "module" });
 
   useEffect(() => {
-    initElectricSqlJs(worker, {locateFile: (file: any) => `/${file}`})
-      .then((SQL: any) => SQL.openDatabase('example.db'))
-      .then((db: ElectrifiedDatabase) => setDb(db))
+    initElectricSqlJs(worker, {locateFile: (file: string) => `/${file}`})
+      .then((SQL) => SQL.openDatabase('example.db'))
+      .then((db) => setDb(db))
   }, [])
 
   return (
     <ElectricProvider db={db}>
-      <Component />
+      <ExampleComponent />
     </ElectricProvider>
   )
 }
 
-const Component = () => {
+const ExampleComponent = () => {
   const { results, error } = useElectricQuery('SELECT value FROM items', [])
   const db = useElectric() as ElectrifiedDatabase
 
@@ -74,7 +74,7 @@ export default function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <ElectrifiedComponent/>
+        <ElectrifiedExampleComponent/>
       </header>
     </div>
   );

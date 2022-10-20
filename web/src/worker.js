@@ -1,4 +1,4 @@
 import { ElectricWorker } from 'electric-sql/browser'
-import { data as migrationsData } from './migrations'
+import config from "../electric-config";
 
-ElectricWorker.start(self, migrationsData)
+ElectricWorker.start(self, config);
