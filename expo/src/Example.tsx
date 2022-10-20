@@ -5,12 +5,8 @@ import * as SQLite from "expo-sqlite";
 
 // Metro does not support package.json exports. Use resolver.
 // https://github.com/facebook/metro/issues/670
-import {electrify, ElectrifiedDatabase} from 'electric-sql/expo';
-import {
-  ElectricProvider,
-  useElectric,
-  useElectricQuery,
-} from 'electric-sql/react';
+import {ElectrifiedDatabase, electrify} from 'electric-sql/expo';
+import {ElectricProvider, useElectric, useElectricQuery} from 'electric-sql/react';
 
 import {styles} from './Styles';
 
@@ -20,27 +16,28 @@ export const ElectrifiedExample = () => {
   const [db, setDb] = useState<ElectrifiedDatabase>();
 
   useEffect(() => {
-    const odb = SQLite.openDatabase('example.db');
-    const init = async () => {     
-      await electrify(odb as any, config as any)
-        .then((db: ElectrifiedDatabase) => setDb(db))
-        .catch((err) => {
-          console.warn("Error electrifying database");
-          console.log(JSON.stringify(err));
-          throw err;
-        })
-      }
+    const init = async () => {
+      const original = SQLite.openDatabase('example.db');
+      const db = await electrify(original, config)
+
+      setDb(db)
+    }
+
     init();
   }, []);
 
+  if (db === null) {
+    return null
+  }
+
   return (
     <ElectricProvider db={db}>
-      <Example />
+      <ExampleComponent />
     </ElectricProvider>
   );
 };
 
-const Example = () => {
+const ExampleComponent = () => {
   const {results, error} = useElectricQuery('SELECT value FROM items', []);
   const db = useElectric() as ElectrifiedDatabase;
 
@@ -52,7 +49,7 @@ const Example = () => {
     );
   }
 
-  if (db === undefined || results === undefined) {
+  if (results === undefined) {
     return null;
   }
 
