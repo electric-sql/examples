@@ -43,7 +43,7 @@ As a local-first system, ElectricSQL defaults to working without a backend. So y
 
 The simplest way is to [sign up to ElectricSQL](https://console.electric-sql.com/auth/signup) and create an application. This will give you a globally unique `app` slug. Paste this into your [application config](https://electric-sql.com/docs/usage/configure) in [`./electric-config.js`](./electric-config.js).
 
-Alternatively, see [these instructions](https://github.com/electric-sql/examples#running-the-backend-locally) to run and connect to the backend locally.
+Alternatively, see [these instructions](../#running-the-backend-locally) to run and connect to the backend locally.
 
 ## Run
 
