@@ -6,9 +6,10 @@ import './style.css'
 import { initElectricSqlJs, ElectrifiedDatabase} from "electric-sql/browser"
 import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
 
-const ElectrifiedExampleComponent = () => {
+const worker = new Worker("./worker.js", { type: "module" });
+
+export const ElectrifiedExample = () => {
   const [ db, setDb ] = useState<ElectrifiedDatabase>()
-  const worker = new Worker("./worker.js", { type: "module" });
 
   useEffect(() => {
     initElectricSqlJs(worker, {locateFile: (file: string) => `/${file}`})
@@ -74,7 +75,7 @@ export default function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <ElectrifiedExampleComponent/>
+        <ElectrifiedExample />
       </header>
     </div>
   );
