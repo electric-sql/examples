@@ -1,6 +1,6 @@
 /*
 ElectricDB Migration
-{"metadata": {"title": "init", "name": "1664806630_init", "sha256": "a09b508f1a21aa7d11c348fbae6dc7bdf93decef4192c394f2e44daa3d1e77b7"}}
+{"metadata": {"title": "init", "name": "1666288242_init", "sha256": "065f6851ac11a34c6ed61e57d5d93a34252d1d8cd8eeeb73271e9e74586676ab"}}
 */
 
 /*---------------------------------------------
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS _electric_oplog (
 -- Somewhere to keep our metadata
 CREATE TABLE IF NOT EXISTS _electric_meta (
   key TEXT,
-  value TEXT
+  value BLOB
 );
 
 -- Somewhere to track migrations
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS _electric_migrations (
 );
 
 -- Initialisation of the metadata table
-INSERT INTO _electric_meta (key, value) VALUES ('compensations', '0'), ('lastAckdRowId','0'), ('lastSentRowId', '0'), ('lsn', 'MA==');
+INSERT INTO _electric_meta (key, value) VALUES ('compensations', 0), ('lastAckdRowId','0'), ('lastSentRowId', '0'), ('lsn', 'MA==');
 
 
 -- These are toggles for turning the triggers on and off
