@@ -41,11 +41,13 @@ Or using npm:
 npm install
 ```
 
-You may want to also check the [install section of the react-native-sqlite-storage driver README](https://github.com/andpor/react-native-sqlite-storage#installation) and e.g.: install the [pods](https://cocoapods.org):
+Install the [pods](https://cocoapods.org):
 
 ```sh
 cd ios && pod install && cd ..
 ```
+
+You may want to also check the [install section of the react-native-sqlite-storage driver README](https://github.com/andpor/react-native-sqlite-storage#installation).
 
 ## Configure
 
@@ -58,13 +60,13 @@ Alternatively, see [these instructions](https://github.com/electric-sql/examples
 Run in the Android simulator:
 
 ```sh
-yarn run android
+yarn android
 ```
 
 Run in the iOS simulator:
 
 ```sh
-yarn run ios
+yarn ios
 ```
 
 Or open in Xcode:
