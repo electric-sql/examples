@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Pressable, Text, View} from 'react-native';
 
-import SQLite, {SQLiteDatabase} from 'react-native-sqlite-storage';
+import SQLite from 'react-native-sqlite-storage';
 
 // Metro does not support package.json exports. Use resolver.
 // https://github.com/facebook/metro/issues/670
-import {electrify, ElectrifiedDatabase} from 'electric-sql/react-native';
+import {electrify, Database, ElectrifiedDatabase} from 'electric-sql/react-native';
 import {
   ElectricProvider,
   useElectric,
@@ -16,33 +16,30 @@ import {styles} from './Styles';
 
 import config from '../electric-config';
 
+const promisesEnabled = true;
+SQLite.enablePromise(promisesEnabled);
+
 export const ElectrifiedExample = () => {
   const [db, setDb] = useState<ElectrifiedDatabase>();
 
   useEffect(() => {
-    const promisesEnabled = true;
-    SQLite.enablePromise(promisesEnabled);
-
-    SQLite.openDatabase({name: 'example.db'})
-      .then((sqlDb: SQLiteDatabase) =>
-        electrify(sqlDb as any, promisesEnabled, config as any),
-      )
-      .then((edb: ElectrifiedDatabase) => setDb(edb))
-      .catch((err: Error) => {
-        console.warn('Error electrifying database');
-
-        throw err;
-      });
+    SQLite.openDatabase('example.db')
+      .then((db: Database) => electrify(db, promisesEnabled, config))
+      .then((db: ElectrifiedDatabase) => setDb(db))
   }, []);
+
+  if (db === undefined) {
+    return null
+  }
 
   return (
     <ElectricProvider db={db}>
-      <Example />
+      <ExampleComponent />
     </ElectricProvider>
   );
 };
 
-const Example = () => {
+const ExampleComponent = () => {
   const {results, error} = useElectricQuery('SELECT value FROM items', []);
   const db = useElectric() as ElectrifiedDatabase;
 
@@ -54,7 +51,7 @@ const Example = () => {
     );
   }
 
-  if (db === undefined || results === undefined) {
+  if (results === undefined) {
     return null;
   }
 
