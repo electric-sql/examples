@@ -5,7 +5,7 @@ import * as SQLite from "expo-sqlite";
 
 // Metro does not support package.json exports. Use resolver.
 // https://github.com/facebook/metro/issues/670
-import {ElectrifiedDatabase, electrify} from 'electric-sql/expo';
+import {Database, ElectrifiedDatabase, electrify} from 'electric-sql/expo';
 import {ElectricProvider, useElectric, useElectricQuery} from 'electric-sql/react';
 
 import {styles} from './Styles';
@@ -17,16 +17,16 @@ export const ElectrifiedExample = () => {
 
   useEffect(() => {
     const init = async () => {
-      const original = SQLite.openDatabase('example.db');
-      const db = await electrify(original, config)
+      const original = SQLite.openDatabase('example22.db') as Database;
+      const opts = config as any
 
-      setDb(db)
+      setDb(await electrify(original, opts))
     }
 
     init();
   }, []);
 
-  if (db === null) {
+  if (db === undefined) {
     return null
   }
 

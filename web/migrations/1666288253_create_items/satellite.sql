@@ -1,11 +1,10 @@
 /*
 ElectricDB Migration
-{"metadata": {"title": "create_items", "name": "1664806643_create_items", "sha256": "ad0e74db76567ae78e7505f932047a5e44204563f621564a1f80ab781bebdcd9"}}
+{"metadata": {"title": "create_items", "name": "1666288253_create_items", "sha256": "ddf6ba15a0c6c8a5955ad8c29bc0a785416a47e4d22e0aa8f5f5e2be2e70b46c"}}
 */
-
 CREATE TABLE IF NOT EXISTS main.items (
   value TEXT PRIMARY KEY
-) STRICT, WITHOUT ROWID;
+);
 
 /*---------------------------------------------
 Below are templated triggers added by Satellite
