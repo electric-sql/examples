@@ -35,7 +35,7 @@ To try out the example, you can run the application from ElectricSQL hosted serv
 ```bash
  git clone https://github.com/electric-sql/electric
  cd electric
- make start\_dev\_env && make deps compile shell
+ make start_dev_env && make deps compile shell
 ```
 
 You can tear down all containers with `make stop_dev_env`.
