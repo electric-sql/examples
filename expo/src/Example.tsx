@@ -60,17 +60,13 @@ const Example = () => {
     const randomValue = Math.random().toString(16).substr(2);
 
     db.transaction(tx => {
-      tx.executeSql('INSERT INTO items VALUES(?)', [randomValue], () => {
-        db.electric.notifier.potentiallyChanged();
-      });
+      tx.executeSql('INSERT INTO items VALUES(?)', [randomValue]);
     });
   };
 
   const clearItems = async () => {
     db.transaction(tx => {
-      tx.executeSql('DELETE FROM items where true', undefined, () => {
-        db.electric.notifier.potentiallyChanged();
-      });
+      tx.executeSql('DELETE FROM items where true', undefined);
     });
   };
 

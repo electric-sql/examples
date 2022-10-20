@@ -1,7 +1,7 @@
 # Web browser example
-This example shows how create a React application backed by Electrified SQLite database.
+This example shows how create a React application backed by an electrified SQLite database, synching data across devices through the Cloud.
 
-To use SQLite in the browser there is a bit of fiddling with configurations. To get you started, we provide an Electrified SQL.JS driver that relays operations to an absurd-sql database running inside a worker. It sounds complicated, but all boils down to the following block of code:
+To use SQLite in the browser there is a bit of fiddling with configurations. To get you started, we provide an electrified SQL.JS driver that relays operations to an absurd-sql database running inside a worker. It sounds complicated, but all boils down to the following block of code:
 ```jsx
 const ElectrifiedComponent = () => {
   const [ db, setDb ] = useState<ElectrifiedDatabase>()
@@ -21,11 +21,7 @@ const ElectrifiedComponent = () => {
 }
 ```
 
-To try out the example, you can run the application from ElectricSQL hosted service, or launch the infrastructure yourself.
-
-To launch the infrastructure locally, you will need Makefile and Docker.
-
-Clone the Electric repository and launch the development cluster:
+To try out the example, you can run the application from ElectricSQL hosted service, or use a local development cluster. To launch the cluster you will need Makefile and Docker:
 ```bash
  git clone https://github.com/electric-sql/electric
  cd electric
@@ -42,8 +38,7 @@ Now, clone this project and install it:
  yarn
 ```
 
-You need to provide the [configurations](https://electric-sql/docs/usage/configure) to connect to ElectricSQL.
-You can edit ElectricSQL configurations for this project in  ```satellite-config.js```:
+You can edit ElectricSQL [configurations](https://electric-sql/docs/usage/configure) in  ```satellite-config.js```:
 ```javascript
 const config = {
   app: "example-app",
@@ -51,7 +46,7 @@ const config = {
 };
 ```
 When running your application from Electric service, edit ```app``` to match your application name.
-For running the infrastructure yourself, you can set ```url``` to override the location of the service (  default is "http://localhost:5133").
+When running Electric yourself, you can set ```url``` to override the location of the service (  default is "http://localhost:5133").
 
 Bundle the Javascript and start the server:
 ```bash
