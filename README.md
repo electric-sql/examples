@@ -36,13 +36,14 @@ The simplest way to configure a backend is to [sign up to ElectricSQL](https://c
 
 #### Running the backend locally
 
-Alternatively, you can clone the [electric-sql/electric](https://github.com/electric-sql/electric) repo and run locally using Makefile and Docker:
+Alternatively, you can clone the [electric-sql/electric](https://github.com/electric-sql/electric) repo and run locally using Makefile, Docker and [Elixir](https://elixir-lang.org/install.html):
 
 ```sh
  git clone https://github.com/electric-sql/electric
  cd electric
  make start_dev_env && make deps compile shell
 ```
+**Note**: we are improving our images so you don't have to install Elixir in the future.
 
 This runs a replication service on `localhost:5133`, which you can specify to connect to using the `url` config option:
 
