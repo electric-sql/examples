@@ -10,6 +10,7 @@ import {ElectricProvider, useElectric, useElectricQuery} from 'electric-sql/reac
 
 import {styles} from './Styles';
 import config from '../electric-config';
+import {data} from '../migrations';
 
 const promisesEnabled = true;
 SQLite.enablePromise(promisesEnabled);
@@ -20,7 +21,7 @@ export const ElectrifiedExample = () => {
   useEffect(() => {
     const init = async () => {
       const original = await SQLite.openDatabase({name: 'example.db'}) as unknown as Database;
-      const opts = config as any
+      const opts = {config, migrations: data.migrations}
 
       const electrified = await electrify(original, promisesEnabled, opts)
       setDb(electrified)

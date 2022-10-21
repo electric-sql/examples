@@ -1,8 +1,9 @@
-import {data} from './migrations';
-
 const config = {
   app: 'example-app',
-  migrations: data.migrations,
+  replication: {
+    address: 'localhost',
+    port: 5133,
+  },
 };
 
 export default config;
