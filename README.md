@@ -41,23 +41,37 @@ Alternatively, you can clone the [electric-sql/electric](https://github.com/elec
 ```sh
  git clone https://github.com/electric-sql/electric
  cd electric
- make start_dev_env && make deps compile shell
+ make start_dev_env && ELECTRIC_MIGRATIONS_DIR='path to migration folder in the example' make deps compile shell
 ```
 
-This runs a replication service on `localhost:5133`, which you can specify to connect to using the `url` config option:
+This runs a replication service on `localhost:5133`, which you can specify to connect to using the `replication` config option:
 
 ```js
 const config = {
-  url: "http://localhost:5133",
+  replication: {
+    address: 'localhost'
+    port: 5133,
+  },
   // ... other configuration options ...
 };
 ```
+```ELECTRIC_MIGRATIONS_DIR``` specifies the location of the migration files for the example. This is a temporary workaround while we add support for uploading migrations.
 
 Note that you can tear down all the containers with:
 
 ```sh
 make stop_dev_env
 ```
+
+#### Applying migrations
+
+To apply the migrations that were loaded in the previous section, run the commands:
+
+```bash
+  curl -v -X PUT http://localhost:5050/api/migrations/postgres_1 -H 'Content-Type: application/json' -d '{"vsn":"1666288253_create_items"}'
+  curl -v -X PUT http://localhost:5050/api/migrations/postgres_2 -H 'Content-Type: application/json' -d '{"vsn":"1666288253_create_items"}'
+```
+This applies the migration with name ```1666288253_create_items``` on the specified Postgres instances.
 
 ## More information
 
