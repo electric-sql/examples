@@ -19,7 +19,7 @@ export const ElectrifiedExample = () => {
   useEffect(() => {
     const init = async () => {
       const original = SQLite.openDatabase('example.db') as unknown as Database;
-      const opts = {config, migrations: data.migrations}
+      const opts = {...config, migrations: data.migrations}
 
       const electrified = await electrify(original, opts)
       setDb(electrified)
