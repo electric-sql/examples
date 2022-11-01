@@ -5,6 +5,8 @@ import './style.css'
 
 import { initElectricSqlJs, ElectrifiedDatabase} from "electric-sql/browser"
 import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
+import  config  from '../electric-config'
+import { data as migrations } from "../migrations";
 
 const worker = new Worker("./worker.js", { type: "module" });
 
@@ -14,7 +16,8 @@ export const ElectrifiedExample = () => {
   useEffect(() => {
     const init = async () => {
       const SQL = await initElectricSqlJs(worker, {locateFile: (file: string) => `/${file}`})
-      const electrified = await SQL.openDatabase('example.db')
+      const conf = {...config, migrations: migrations.migrations}
+      const electrified = await SQL.openDatabase('example.db', conf)
 
       setDb(electrified)
     }
