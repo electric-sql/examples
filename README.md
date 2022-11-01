@@ -32,11 +32,12 @@ As a local-first system, ElectricSQL defaults to working without a backend. So y
 
 ### Using the ElectricSQL service
 
-The simplest way to configure a backend is to [sign up to ElectricSQL](https://console.electric-sql.com/auth/signup) and create an application. This will give you a globally unique `app` slug. Paste this into your [application config](https://electric-sql.com/docs/usage/configure), which in these examples is typically defined in an `electric-config.js` file in the root of the example folder, e.g.:
+The simplest way to configure a backend is to [sign up to ElectricSQL](https://console.electric-sql.com/auth/signup) and create an application. This will give you a globally unique `app` slug and an environment name. Paste this into your [application config](https://electric-sql.com/docs/usage/configure), which in these examples is typically defined in an `electric-config.js` file in the root of the example folder, e.g.:
 
 ```js
 const config = {
   app: '<YOUR APP SLUG>',
+  env: '<YOUR ENV NAME>',
   // ... other configuration options ...
 };
 ```
