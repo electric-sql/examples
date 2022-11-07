@@ -13,6 +13,8 @@ import {styles} from './Styles';
 import {data} from '../migrations';
 import config from '../electric-config';
 
+let initialized: boolean | null = null
+
 export const ElectrifiedExample = () => {
   const [db, setDb] = useState<ElectrifiedDatabase>();
 
@@ -23,9 +25,13 @@ export const ElectrifiedExample = () => {
 
       const electrified = await electrify(original, opts)
       setDb(electrified)
+      initialized = true
     }
 
-    init();
+    if(initialized === null){
+      initialized = false
+      init();
+    }
   }, []);
 
   if (db === undefined) {

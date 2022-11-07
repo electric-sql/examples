@@ -7,6 +7,7 @@ import { initElectricSqlJs, ElectrifiedDatabase} from "electric-sql/browser"
 import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
 
 const worker = new Worker("./worker.js", { type: "module" });
+let initialized: boolean | null = null
 
 export const ElectrifiedExample = () => {
   const [ db, setDb ] = useState<ElectrifiedDatabase>()
@@ -17,9 +18,13 @@ export const ElectrifiedExample = () => {
       const electrified = await SQL.openDatabase('example.db')
 
       setDb(electrified)
+      initialized = true
     }
 
-    init();
+    if(initialized === null){
+      initialized = false
+      init();
+    }
   }, [])
 
   return (

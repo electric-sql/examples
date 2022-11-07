@@ -15,6 +15,8 @@ import {data} from '../migrations';
 const promisesEnabled = true;
 SQLite.enablePromise(promisesEnabled);
 
+let initialized: boolean | null = null
+
 export const ElectrifiedExample = () => {
   const [db, setDb] = useState<ElectrifiedDatabase>();
 
@@ -25,9 +27,13 @@ export const ElectrifiedExample = () => {
 
       const electrified = await electrify(original, promisesEnabled, opts)
       setDb(electrified)
+      initialized = true
     }
 
-    init();
+    if(initialized === null){
+      initialized = false
+      init()
+    }
   }, []);
 
   if (db === undefined) {
