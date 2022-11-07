@@ -11,7 +11,7 @@
   "dependencies": {
     "@tsconfig/react-native": "^2.0.2",
     "@types/react-native": "~0.69.1",
-    "electric-sql": "^0.2.2",
+    "electric-sql": "^0.2.3",
     "expo": "~46.0.16",
     "expo-sqlite": "^10.3.0",
     "expo-status-bar": "~1.4.0",
