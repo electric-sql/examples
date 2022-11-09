@@ -9,8 +9,6 @@ import {Database, ElectrifiedDatabase, electrify} from 'electric-sql/expo';
 import {ElectricProvider, useElectric, useElectricQuery} from 'electric-sql/react';
 
 import {styles} from './Styles';
-
-import {data} from '../migrations';
 import config from '../electric-config';
 
 export const ElectrifiedExample = () => {
@@ -19,9 +17,8 @@ export const ElectrifiedExample = () => {
   useEffect(() => {
     const init = async () => {
       const original = SQLite.openDatabase('example.db') as unknown as Database;
-      const opts = {...config, migrations: data.migrations}
 
-      const electrified = await electrify(original, opts)
+      const electrified = await electrify(original, config)
       setDb(electrified)
     }
 
