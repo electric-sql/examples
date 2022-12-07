@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "electric-sql": {
+      "signature": "978625a92809abf1fe6aad61962d5d81",
+      "file": true,
+      "replaced": "^0.2.3"
+    }
+  }
+}
