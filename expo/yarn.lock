@@ -2863,19 +2863,21 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
-electric-sql@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/electric-sql/-/electric-sql-0.2.0.tgz#643058eca42c28e21d0675a9d0f150527e0e17b0"
-  integrity sha512-DUlOHZ5pex97OHeaP/NBRZsFpXT0wFRBtpV6PCpCI7O/DpyUzuqqzlu4tyenynd5IN1BlLtdxGkI7K+4r6qnEQ==
+electric-sql@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/electric-sql/-/electric-sql-0.3.1.tgz#879f56b8658cc5d3137ea47f6e826ef86e5a1296"
+  integrity sha512-yeQzjETog0moaQjLHKOC0ZrbqYi2e416PWHySn9XVDR2f3qE5J29ZNbFDSfVko2IU/HVuyzRjGCZR74jpJCMSw==
   dependencies:
     base-64 "^1.0.0"
     events "^3.3.0"
+    exponential-backoff "^3.1.0"
     fastestsmallesttextencoderdecoder "^1.0.22"
     frame-stream "^3.0.1"
     lodash.throttle "^4.1.1"
     long "^5.2.0"
     protobufjs "^7.1.1"
     sqlite-parser "^1.0.1"
+    uuid "^9.0.0"
     walkjs "^3.2.4"
     ws "^8.8.1"
 
@@ -3118,6 +3120,11 @@ expo@~46.0.16:
     uuid "^3.4.0"
   optionalDependencies:
     expo-error-recovery "~3.2.0"
+
+exponential-backoff@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/exponential-backoff/-/exponential-backoff-3.1.0.tgz#9409c7e579131f8bd4b32d7d8094a911040f2e68"
+  integrity sha512-oBuz5SYz5zzyuHINoe9ooePwSu0xApKWgeNzok4hZ5YKXFh9zrQBEM15CXqoZkJJPuI2ArvqjPQd8UKJA753XA==
 
 extend-shallow@^2.0.1:
   version "2.0.1"
@@ -6503,6 +6510,11 @@ uuid@^8.0.0, uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
+uuid@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
+  integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
 
 valid-url@~1.0.9:
   version "1.0.9"
