@@ -5,8 +5,10 @@ import './style.css'
 
 import { initElectricSqlJs, ElectrifiedDatabase} from "electric-sql/browser"
 import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
+import  config  from '../electric-config'
 
 const worker = new Worker("./worker.js", { type: "module" });
+const user_id = "shared-user-id"
 
 export const ElectrifiedExample = () => {
   const [ db, setDb ] = useState<ElectrifiedDatabase>()
@@ -14,7 +16,7 @@ export const ElectrifiedExample = () => {
   useEffect(() => {
     const init = async () => {
       const SQL = await initElectricSqlJs(worker, {locateFile: (file: string) => `/${file}`})
-      const electrified = await SQL.openDatabase('example.db')
+      const electrified = await SQL.openDatabase('example.db', {...config, token: user_id})
 
       setDb(electrified)
     }
