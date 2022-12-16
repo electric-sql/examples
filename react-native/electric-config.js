@@ -2,13 +2,13 @@ import {data} from './migrations';
 
 const config = {
   app: 'example-app',
-  env: 'test',
   token: 'my-token',
   replication: {
-    address: 'localhost',
+    host: 'localhost',
     port: 5133,
+    insecure: true,
   },
-  migrations: data.migrations
+  migrations: data.migrations,
 };
 
 export default config;
