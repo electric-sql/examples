@@ -2,7 +2,6 @@ export const data = {
   migrations: [
     {
       satellite_body: [
-        "-- Temporary fix LSN issue: \nUPDATE _electric_meta SET value='MA==' WHERE key='lsn';",
         'CREATE TABLE "todolist" (\n    "id" TEXT,\n    "filter" TEXT,\n    "editing" TEXT,\n    PRIMARY KEY ("id")\n);',
         'CREATE TABLE "todo" (\n    "id" TEXT,\n    "listid" TEXT,\n    "text" TEXT,\n    "completed" integer DEFAULT 0 NOT NULL,\n    PRIMARY KEY ("id")\n  );',
         "INSERT INTO _electric_trigger_settings(tablename,flag) VALUES ('main.todo', 1);",

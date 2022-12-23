@@ -2,7 +2,6 @@ export const data = {
   migrations: [
     {
       satellite_body: [
-        "-- Temporary fix LSN issue: \nUPDATE _electric_meta SET value='MA==' WHERE key='lsn';",
         'CREATE TABLE IF NOT EXISTS main.items (\n  value TEXT PRIMARY KEY\n);',
         '-- These are toggles for turning the triggers on and off\nDROP TABLE IF EXISTS _electric_trigger_settings;',
         'CREATE TABLE _electric_trigger_settings(tablename STRING PRIMARY KEY, flag INTEGER);',
