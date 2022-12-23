@@ -55,10 +55,10 @@ make start_dev_env
 make deps compile
 ```
 
-Make sure you've [built your migrations](https://electric-sql.com/docs/usage/migrations) in your application folder, then set the `ELECTRIC_MIGRATIONS_DIR` environment variable to the path to the migrations folder:
+Make sure you've [built your migrations](https://electric-sql.com/docs/usage/migrations) in your application folder, then set the `MIGRATIONS_DIR` environment variable to the path to the migrations folder:
 
 ```sh
-export ELECTRIC_MIGRATIONS_DIR='../path/to/migrations'
+export MIGRATIONS_DIR='../path/to/migrations'
 ```
 
 Now run the electric service:
