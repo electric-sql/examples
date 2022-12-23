@@ -2863,10 +2863,10 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
-electric-sql@^0.3.2:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/electric-sql/-/electric-sql-0.3.3.tgz#c46255dbbdb24d42b29b63dada55e446adfa5813"
-  integrity sha512-yTa46aMeKQ7EmGBPG5TA55Pv7IUAKwsCDsc1aivNHM5db5I2zuNdHW2T7SuBou22R9RyD6yfEladQ9+zHmey4w==
+electric-sql@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/electric-sql/-/electric-sql-0.3.4.tgz#007eb146950c418fdd801a68da5d91455e4771ba"
+  integrity sha512-/OUOLJQtfSsQE21QWXogtdiL4/f9bExAl7OK2nYl0xNCmkpHOFjUeqj1+aAxK25vS6+gfU/BTMqjWNSqWHZleA==
   dependencies:
     base-64 "^1.0.0"
     events "^3.3.0"

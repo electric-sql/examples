@@ -460,10 +460,10 @@ ee-first@1.1.1:
   resolved "https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz"
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
-electric-sql@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/electric-sql/-/electric-sql-0.3.1.tgz#879f56b8658cc5d3137ea47f6e826ef86e5a1296"
-  integrity sha512-yeQzjETog0moaQjLHKOC0ZrbqYi2e416PWHySn9XVDR2f3qE5J29ZNbFDSfVko2IU/HVuyzRjGCZR74jpJCMSw==
+electric-sql@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/electric-sql/-/electric-sql-0.3.4.tgz#007eb146950c418fdd801a68da5d91455e4771ba"
+  integrity sha512-/OUOLJQtfSsQE21QWXogtdiL4/f9bExAl7OK2nYl0xNCmkpHOFjUeqj1+aAxK25vS6+gfU/BTMqjWNSqWHZleA==
   dependencies:
     base-64 "^1.0.0"
     events "^3.3.0"
@@ -471,6 +471,7 @@ electric-sql@^0.3.1:
     fastestsmallesttextencoderdecoder "^1.0.22"
     frame-stream "^3.0.1"
     lodash.throttle "^4.1.1"
+    loglevel "^1.8.1"
     long "^5.2.0"
     protobufjs "^7.1.1"
     sqlite-parser "^1.0.1"
@@ -806,6 +807,11 @@ lodash@^4.17.10, lodash@^4.17.14, lodash@^4.17.20:
   version "4.17.21"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
+
+loglevel@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.8.1.tgz#5c621f83d5b48c54ae93b6156353f555963377b4"
+  integrity sha512-tCRIJM51SHjAayKwC+QAg8hT8vg6z7GSgLJKGvzuPb1Wc+hLzqtuVLxp6/HzSPOozuK+8ErAhy7U/sVzw8Dgfg==
 
 long@^5.0.0, long@^5.2.0:
   version "5.2.0"
