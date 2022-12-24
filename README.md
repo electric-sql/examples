@@ -18,7 +18,7 @@ This repo contains example applications illustrating how to use [ElectricSQL](ht
 
 See the sub folders for the actual applications:
 
-- [expo](./expo) &mdash; example mobile app using [Expo](https://expo.de) with the [expo-sqlite](https://docs.expo.dev/versions/latest/sdk/sqlite/) driver
+- [expo](./expo) &mdash; example mobile app using [Expo](https://expo.dev) with the [expo-sqlite](https://docs.expo.dev/versions/latest/sdk/sqlite/) driver
 - [react-native](./react-native) &mdash; example mobile app using [React Native](https://reactnative.dev) with the [react-native-sqlite-storage](https://www.npmjs.com/package/react-native-sqlite-storage) driver
 - [web](./web) &mdash; example web application using ElectricSQL in the browser with [SQL.js](https://sql.js.org) and [absurd-sql](https://github.com/jlongster/absurd-sql)
 
