@@ -4,9 +4,8 @@ import './App.css'
 import './style.css'
 
 // de-comment imports as necessary
-// import {ElectrifiedDatabase} from "electric-sql/browser"
+// import {ElectrifiedDatabase, initElectricSqlJs} from "electric-sql/browser"
 // import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
-// import { ElectricDatabase } from 'electric-sql/dist/drivers'
 
 export const ElectrifiedExample = () => {
   // 1. Set configuration
@@ -20,13 +19,14 @@ export const ElectrifiedExample = () => {
 
 const ExampleComponent = () => {
   const addItem = () => {
-    // TODO
+    // 4. Execute INSERT operation
   }
 
   const clearItems = () => {
-    // TODO
+    // 5. Execute DELETE operation
   }  
 
+  // 6. Populate list with results from reactive query
   return (
     <div>
       <button className='button' onClick={addItem}>
