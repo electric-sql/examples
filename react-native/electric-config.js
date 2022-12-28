@@ -6,7 +6,7 @@ const config = {
   replication: {
     host: 'localhost',
     port: 5133,
-    insecure: true,
+    ssl: false,
   },
   migrations: data.migrations,
 };

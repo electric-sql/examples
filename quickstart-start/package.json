@@ -2,7 +2,7 @@
   "name": "react",
   "version": "1.0.0",
   "main": "builder.js",
-  "author": "ElectricSQL",
+  "author": "Valter Balegas",
   "license": "MIT",
   "scripts": {
     "build": "node builder.js",
@@ -12,18 +12,16 @@
   "dependencies": {
     "@aphro/absurd-sql": "^0.0.53",
     "@aphro/sql.js": "^1.7.0",
-    "base-64": "^1.0.0",
-    "electric-sql": "^0.3.7",
     "fs-extra": "^10.0.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "uuid": "^9.0.0"
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.3",
+    "@types/live-server": "^1.2.1",
     "@types/node": "^16.9.1",
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
-    "@types/uuid": "^8.3.4",
     "esbuild": "^0.12.26",
     "esbuild-plugin-inline-image": "^0.0.8",
     "lite-server": "^2.6.1",
