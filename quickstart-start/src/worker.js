@@ -1,3 +1,3 @@
-import { ElectricWorker } from 'electric-sql/browser'
+// import { ElectricWorker } from 'electric-sql/browser'
 
-ElectricWorker.start(self);
+// ElectricWorker.start(self);
