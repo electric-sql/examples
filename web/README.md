@@ -109,47 +109,32 @@ This spins up a web worker, initialises the persistence machinery, opens an elec
 
 ```tsx
 const ExampleComponent = () => {
-  const { results, error } = useElectricQuery('SELECT value FROM items', [])
   const db = useElectric() as ElectrifiedDatabase
-
-  if (error !== undefined) {
-    return (
-      <div>
-        <p className='text'>
-          Error: { `${error}` }
-        </p>
-      </div>
-    )
-  }
-
-  if (db === undefined || results === undefined) {
-    return null
-  }
+  const { results } = useElectricQuery('SELECT value FROM items', [])
 
   const addItem = () => {
-    const randomValue = Math.random().toString(16).substr(2)
-
-    db.exec('INSERT INTO items VALUES(?)', [randomValue])
+    db.run('INSERT INTO items VALUES(?)', [crypto.randomUUID()])
   }
 
   const clearItems = () => {
-    db.exec('DELETE FROM items where true')
+    db.run('DELETE FROM items where true')
   }
 
   return (
     <div>
-      {results.map((item: any, index: any) => (
+      <div className='controls'>
+        <button className='button' onClick={addItem}>
+          Add
+        </button>
+        <button className='button' onClick={clearItems}>
+          Clear
+        </button>
+      </div>
+      {results && results.map((item: any, index: any) => (
         <p key={ index } className='item'>
-          Item: { item.value }
+          <code>{ item.value }</code>
         </p>
       ))}
-
-      <button className='button' onClick={addItem}>
-        <p className='text'>Add</p>
-      </button>
-      <button className='button' onClick={clearItems}>
-      <p className='text'>Clear</p>
-      </button>
     </div>
   )
 }
