@@ -4,8 +4,7 @@ import './Example.css'
 // XXX Uncomment these imports.
 // import { ElectrifiedDatabase, initElectricSqlJs } from 'electric-sql/browser'
 // import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
-
-// XXX Also import your bundled migrations.
+// import { insecureAuthToken } from './auth'
 // import { data as bundle } from '../migrations/dist'
 
 // XXX Delete this in favour of `initElectricSqlJs`.
@@ -17,6 +16,7 @@ const DbContext = React.createContext(undefined)
 // XXX Uncomment your configuration and fill in your cloud sync `app` ID.
 // const config = {
 //   app: '<YOUR APP ID>',
+//   env: 'default',
 //   migrations: bundle.migrations
 // }
 
@@ -29,6 +29,7 @@ const locateOpts = {
 // const worker = new Worker("./worker.js", { type: "module" });
 
 export const Example = () => {
+  // XXX Swap `useState()` for `useState<ElectrifiedDatabase>()`.
   const [ db, setDb ] = useState()
 
   useEffect(() => {
@@ -37,8 +38,9 @@ export const Example = () => {
       const SQL = await initSqlJs(locateOpts)
       const original = new SQL.Database()
       // XXX With this electrified version.
+      // const auth = await insecureAuthToken(config.app, config.env, "dummy-user")
       // const SQL = await initElectricSqlJs(worker, locateOpts)
-      // const electrified = await SQL.openDatabase('example.db', config)
+      // const electrified = await SQL.openDatabase('example.db', {...auth, ...config})
 
       // XXX Delete this -- no need to manually run DDL.
       const ddl = `

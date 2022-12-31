@@ -8,6 +8,9 @@
   in `Example.tsx`. If you want to use this file instead
   of `Example.tsx` you can change the import in `App.tsx`.
 
+  However, YOU MUST EDIT `<YOUR APP ID>` in the `config`
+  on line 35 in order for this file to work.
+
   This version of the example has the same basic functionality
   as the original but also provides built in cloud sync and
   active-active replication between devices, users and cloud
@@ -24,12 +27,13 @@ import './Example.css'
 
 import { ElectrifiedDatabase, initElectricSqlJs } from 'electric-sql/browser'
 import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
-
+import { insecureAuthToken } from './auth'
 import { data as bundle } from '../migrations/dist'
 
 // Fill in your cloud sync `app` ID from the ElectricSQL console.
 const config = {
   app: '<YOUR APP ID>',
+  env: 'default',
   migrations: bundle.migrations
 }
 
@@ -41,12 +45,14 @@ const locateOpts = {
 const worker = new Worker("./worker.js", { type: "module" });
 
 export const Example = () => {
-  const [ db, setDb ] = useState()
+  const [ db, setDb ] = useState<ElectrifiedDatabase>()
 
   useEffect(() => {
     const init = async () => {
+      const auth = await insecureAuthToken(config.app, config.env, "dummy-user")
+
       const SQL = await initElectricSqlJs(worker, locateOpts)
-      const electrified = await SQL.openDatabase('example.db', config)
+      const electrified = await SQL.openDatabase('example.db', {...auth, ...config})
 
       setDb(electrified)
     }

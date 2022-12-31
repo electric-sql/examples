@@ -1,2 +1,4 @@
-node_modules
+.electricrc
 dist
+migrations
+node_modules
