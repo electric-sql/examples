@@ -28,14 +28,7 @@ import './Example.css'
 import { ElectrifiedDatabase, initElectricSqlJs } from 'electric-sql/browser'
 import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
 import { insecureAuthToken } from './auth'
-import { data as bundle } from '../migrations/dist'
-
-// Fill in your cloud sync `app` ID from the ElectricSQL console.
-const config = {
-  app: '<YOUR APP ID>',
-  env: 'default',
-  migrations: bundle.migrations
-}
+import config from '../electric-config'
 
 const locateOpts = {
   locateFile: (file: string) => `/${file}`

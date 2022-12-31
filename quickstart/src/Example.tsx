@@ -5,20 +5,13 @@ import './Example.css'
 // import { ElectrifiedDatabase, initElectricSqlJs } from 'electric-sql/browser'
 // import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
 // import { insecureAuthToken } from './auth'
-// import { data as bundle } from '../migrations/dist'
+// import config from '../electric-config'
 
 // XXX Delete this in favour of `initElectricSqlJs`.
 import initSqlJs from '@aphro/sql.js'
 
 // XXX Delete this in favour of `ElectricProvider`.
 const DbContext = React.createContext(undefined)
-
-// XXX Uncomment your configuration and fill in your cloud sync `app` ID.
-// const config = {
-//   app: '<YOUR APP ID>',
-//   env: 'default',
-//   migrations: bundle.migrations
-// }
 
 const locateOpts = {
   locateFile: (file: string) => `/${file}`

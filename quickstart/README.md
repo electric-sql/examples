@@ -14,11 +14,11 @@
 
 # ElectricSQL - Quickstart
 
-This is an example web application using ElectricSQL in the browser with React and [SQL.js](https://sql.js.org). It's designed to accompany the [Quickstart guide]() in the ElectricSQL documentation.
+This is an example web application using ElectricSQL in the browser with React and [SQL.js](https://sql.js.org). It's designed to accompany the [Quickstart guide](https://electric-sql.com/docs/usage/quickstart) in the ElectricSQL documentation.
 
 ## Usage
 
-Follow the instructions on the [Quickstart guide]() and see the comments in (and alternative versions of) [src/Example.tsx](src/Example.tsx).
+Follow the instructions on the default path of the [Quickstart guide](https://electric-sql.com/docs/usage/quickstart) and see the comments in (and alternative versions of) [src/Example.tsx](src/Example.tsx).
 
 ## More information
 
