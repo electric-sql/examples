@@ -1,7 +1,7 @@
 /*
 
-  This is the electrified, end point of the example code
-  you should get to at the end of the Quickstart guide.
+  This is the end point of the example code that you should
+  get to at the end of the Quickstart guide.
 
   You should get the same code by following the instructions
   in the Quickstart guide and/or by following the comments
