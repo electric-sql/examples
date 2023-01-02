@@ -22,12 +22,11 @@
 
 
 */
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Example.css'
 
 import { ElectrifiedDatabase, initElectricSqlJs } from 'electric-sql/browser'
 import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
-import { insecureAuthToken } from './auth'
 import config from '../electric-config'
 
 const locateOpts = {
@@ -42,10 +41,8 @@ export const Example = () => {
 
   useEffect(() => {
     const init = async () => {
-      const auth = await insecureAuthToken(config.app, config.env, "dummy-user")
-
       const SQL = await initElectricSqlJs(worker, locateOpts)
-      const electrified = await SQL.openDatabase('example.db', {...auth, ...config})
+      const electrified = await SQL.openDatabase('example.db', config)
 
       setDb(electrified)
     }

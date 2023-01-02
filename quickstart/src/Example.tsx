@@ -31,9 +31,8 @@ export const Example = () => {
       const SQL = await initSqlJs(locateOpts)
       const original = new SQL.Database()
       // XXX With this electrified version.
-      // const auth = await insecureAuthToken(config.app, config.env, "dummy-user")
       // const SQL = await initElectricSqlJs(worker, locateOpts)
-      // const electrified = await SQL.openDatabase('example.db', {...auth, ...config})
+      // const electrified = await SQL.openDatabase('example.db', config)
 
       // XXX Delete this -- no need to manually run DDL.
       const ddl = `
