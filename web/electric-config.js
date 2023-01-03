@@ -1,14 +1,23 @@
-import { data } from "./migrations";
+import { data as bundle } from './migrations/dist'
 
+// Default -- replicates via cloud service.
 const config = {
-  app: "example-app",
-  token: "my-token",
-  replication: {
-    host: "localhost",
-    port: 5133,
-    ssl: false,
-  },
-  migrations: data.migrations,
-};
+  app: '<YOUR APP ID>',
+  env: 'default',
+  migrations: bundle.migrations
+}
 
-export default config;
+// // XXX Alternative -- use the local backend.
+// const config = {
+//   app: '<YOUR APP ID>',
+//   env: 'default',
+//   migrations: bundle.migrations,
+//   replication: {
+//     host: "localhost",
+//     port: 5133,
+//     ssl: false,
+//   },
+//   token: "unused-auth-token"
+// }
+
+export default config
