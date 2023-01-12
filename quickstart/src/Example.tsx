@@ -17,6 +17,9 @@ const locateOpts = {
   locateFile: (file: string) => `/${file}`
 }
 
+// XXX Import your application config and bundled migrations.
+// const config = configure('../electric.json', import.meta.url)
+
 // XXX Enable the ElectricSQL worker.
 // XXX N.b.: don't forget to also uncomment the source of the `./worker.js` file.
 // const worker = new Worker("./worker.js", { type: "module" });
