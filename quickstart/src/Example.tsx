@@ -3,9 +3,8 @@ import './Example.css'
 
 // XXX Uncomment these imports.
 // import { ElectrifiedDatabase, initElectricSqlJs } from 'electric-sql/browser'
+// import { configure } from 'electric-sql/config'
 // import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
-// import { insecureAuthToken } from './auth'
-// import config from '../electric-config'
 
 // XXX Delete this in favour of `initElectricSqlJs`.
 import initSqlJs from '@aphro/sql.js'
