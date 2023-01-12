@@ -29,7 +29,9 @@ import { ElectrifiedDatabase, initElectricSqlJs } from 'electric-sql/browser'
 import { configure } from 'electric-sql/config'
 import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
 
-const config = configure('../electric.json', import.meta.url)
+import app from '../electric.json'
+import migrations from '../migrations/dist'
+const config = configure(app, migrations)
 
 const locateOpts = {
   locateFile: (file: string) => `/${file}`
