@@ -26,10 +26,10 @@ See the sub folders for the actual applications. These include:
 
 Each example has usage instructions in the `README.md`.
 
-See [Running the Examples](/docs/overview/examples) for information on how to:
+See [Running the Examples](https://electric-sql.com/docs/overview/examples) for information on how to:
 
-- [connect to your own sync service](/docs/overview/examples#option-2--connect-to-your-own-sync-service)
-- [run the backend locally](/docs/overview/examples#option-3--run-the-backend-locally)
+- [connect to your own sync service](https://electric-sql.com/docs/overview/examples#option-2--connect-to-your-own-sync-service)
+- [run the backend locally](https://electric-sql.com/docs/overview/examples#option-3--run-the-backend-locally)
 
 ## More information
 

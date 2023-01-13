@@ -51,10 +51,10 @@ yarn ios
 
 ## Sync
 
-The application is setup to autmatically sync via the cloud (when connected). See [Running the Examples](/docs/overview/examples) for information on how to:
+The application is setup to autmatically sync via the cloud (when connected). See [Running the Examples](https://electric-sql.com/docs/overview/examples) for information on how to:
 
-- [connect to your own sync service](/docs/overview/examples#option-2--connect-to-your-own-sync-service)
-- [run the backend locally](/docs/overview/examples#option-3--run-the-backend-locally)
+- [connect to your own sync service](https://electric-sql.com/docs/overview/examples#option-2--connect-to-your-own-sync-service)
+- [run the backend locally](https://electric-sql.com/docs/overview/examples#option-3--run-the-backend-locally)
 
 ## Notes on the code
 
