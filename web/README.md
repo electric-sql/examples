@@ -31,33 +31,6 @@ Install the dependencies:
 yarn
 ```
 
-## Configure
-
-[Sign up to ElectricSQL](https://console.electric-sql.com/auth/signup) and create an application. This will give you a globally unique `app` identifier. Paste this into the `config` object in `electric-config.js`.
-
-Alternatively, see [these instructions](https://github.com/electric-sql/examples#running-the-backend-locally) to run and connect to the backend locally.
-
-## Synchronise schema
-
-[Install the ElectricSQL CLI](), e.g.:
-
-```sh
-brew install electric-sql/tap/electric
-```
-
-Login on the command line with your console credentials:
-
-```sh
-electric auth login YOUR_EMAIL
-```
-
-Build and sync migrations (replacing `APP_ID` with your `app` identifier):
-
-electric init APP_ID
-electric migrations build
-electric migrations sync
-```
-
 ## Run
 
 Build and run:
@@ -66,7 +39,16 @@ Build and run:
 yarn start
 ```
 
-Open [localhost:3001](http://localhost:3001) in two different browsers (so they're backed by different databases) and try it out. You'll see data being replicated between the client applications.
+## Sync
+
+The application is setup to autmatically sync via the cloud (when connected).
+
+Open [localhost:3000](http://localhost:3000) in two different browsers (so they're backed by different databases) and try it out. You'll see data being replicated between the client applications.
+
+See [Running the Examples](/docs/overview/examples) for information on how to:
+
+- [connect to your own sync service](/docs/overview/examples#option-2--connect-to-your-own-sync-service)
+- [run the backend locally](/docs/overview/examples#option-3--run-the-backend-locally)
 
 ## Notes on the code
 
@@ -82,10 +64,8 @@ export const Example = () => {
 
   useEffect(() => {
     const init = async () => {
-      const auth = await insecureAuthToken(config.app, config.env, "dummy-user")
-
       const SQL = await initElectricSqlJs(worker, locateOpts)
-      const electrified = await SQL.openDatabase('example.db', {...auth, ...config})
+      const electrified = await SQL.openDatabase('example.db', config)
 
       setDb(electrified)
     }
