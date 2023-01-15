@@ -30,6 +30,13 @@ module.exports = {
         };
       }
 
+      if (moduleName.startsWith('electric-sql/config')) {
+        return {
+          filePath: `${__dirname}/node_modules/electric-sql/dist/config/index.js`,
+          type: 'sourceFile',
+        };
+      }
+
       // Optionally, chain to the standard Metro resolver.
       return context.resolveRequest(context, moduleName, platform);
     },

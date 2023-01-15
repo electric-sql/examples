@@ -11,7 +11,7 @@ import {
 
 import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
 
-import {ElectrifiedExample} from './src/Example';
+import {Example} from './src/Example';
 
 const Section: React.FC<
   PropsWithChildren<{
@@ -65,7 +65,7 @@ const App = () => {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="ElectricSQL">
-            <ElectrifiedExample />
+            <Example />
           </Section>
         </View>
       </ScrollView>

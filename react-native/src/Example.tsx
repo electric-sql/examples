@@ -1,35 +1,49 @@
 import React, {useEffect, useState} from 'react';
 import {Pressable, Text, View} from 'react-native';
 
-import SQLite, {SQLiteDatabase} from 'react-native-sqlite-storage';
+import SQLite from 'react-native-sqlite-storage';
 
 // Metro does not support package.json exports. Use resolver.
 // https://github.com/facebook/metro/issues/670
-import {Database, ElectrifiedDatabase, electrify} from 'electric-sql/react-native';
-import {ElectricProvider, useElectric, useElectricQuery} from 'electric-sql/react';
+import {
+  Database,
+  ElectrifiedDatabase,
+  electrify,
+} from 'electric-sql/react-native';
+import {configure} from 'electric-sql/config';
+import {
+  ElectricProvider,
+  useElectric,
+  useElectricQuery,
+} from 'electric-sql/react';
 
 import {styles} from './Styles';
-import config from '../electric-config';
+
+import app from '../electric.json';
+import migrations from '../migrations/dist';
+const config = configure(app, migrations);
 
 const promisesEnabled = true;
 SQLite.enablePromise(promisesEnabled);
 
-export const ElectrifiedExample = () => {
+export const Example = () => {
   const [db, setDb] = useState<ElectrifiedDatabase>();
 
   useEffect(() => {
     const init = async () => {
-      const original = await SQLite.openDatabase({name: 'example.db'}) as unknown as Database;
+      const original = (await SQLite.openDatabase({
+        name: 'example.db',
+      })) as unknown as Database;
+      const electrified = await electrify(original, promisesEnabled, config);
 
-      const electrified = await electrify(original, promisesEnabled, config)
-      setDb(electrified)
-    }
+      setDb(electrified);
+    };
 
     init();
   }, []);
 
   if (db === undefined) {
-    return null
+    return null;
   }
 
   return (
@@ -40,49 +54,40 @@ export const ElectrifiedExample = () => {
 };
 
 const ExampleComponent = () => {
-  const {results, error} = useElectricQuery('SELECT value FROM items', []);
   const db = useElectric() as ElectrifiedDatabase;
-
-  if (error !== undefined) {
-    return (
-      <View>
-        <Text style={styles.item}>Error: {`${error}`}</Text>
-      </View>
-    );
-  }
-
-  if (results === undefined) {
-    return null;
-  }
+  const {results} = useElectricQuery('SELECT value FROM items', []);
 
   const addItem = () => {
     const randomValue = Math.random().toString(16).substr(2);
-
     db.transaction(tx => {
       tx.executeSql('INSERT INTO items VALUES(?)', [randomValue]);
     });
   };
 
-  const clearItems = async () => {
+  const clearItems = () => {
     db.transaction(tx => {
-      tx.executeSql('DELETE FROM items where true', undefined);
+      tx.executeSql('DELETE FROM items where true');
     });
   };
 
   return (
     <View>
-      {results.map((item, index) => (
-        <Text key={index} style={styles.item}>
-          Item: {item.value}
-        </Text>
-      ))}
-
-      <Pressable style={styles.button} onPress={addItem}>
-        <Text style={styles.text}>Add</Text>
-      </Pressable>
-      <Pressable style={styles.button} onPress={clearItems}>
-        <Text style={styles.text}>Clear</Text>
-      </Pressable>
+      <View>
+        <Pressable style={styles.button} onPress={addItem}>
+          <Text style={styles.text}>Add</Text>
+        </Pressable>
+        <Pressable style={styles.button} onPress={clearItems}>
+          <Text style={styles.text}>Clear</Text>
+        </Pressable>
+      </View>
+      <View>
+        {results &&
+          results.map((item, index) => (
+            <Text key={index} style={styles.item}>
+              Item: {item.value}
+            </Text>
+          ))}
+      </View>
     </View>
   );
 };

@@ -2483,6 +2483,13 @@ cosmiconfig@^5.0.5, cosmiconfig@^5.1.0:
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
 
+cross-fetch@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.5.tgz#e1389f44d9e7ba767907f7af8454787952ab534f"
+  integrity sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==
+  dependencies:
+    node-fetch "2.6.7"
+
 cross-spawn@^6.0.0:
   version "6.0.5"
   resolved "https://registry.npmjs.org/cross-spawn/-/cross-spawn-6.0.5.tgz"
@@ -2697,6 +2704,26 @@ electric-sql@^0.3.7:
     loglevel "^1.8.1"
     long "^5.2.0"
     protobufjs "^7.1.1"
+    sqlite-parser "^1.0.1"
+    uuid "^9.0.0"
+    walkjs "^3.2.4"
+    ws "^8.8.1"
+
+"electric-sql@https://github.com/electric-sql/typescript-client#f01954b290738d21e2bf5178100a7749a8abd928":
+  version "0.3.12"
+  resolved "https://github.com/electric-sql/typescript-client#f01954b290738d21e2bf5178100a7749a8abd928"
+  dependencies:
+    base-64 "^1.0.0"
+    cross-fetch "^3.1.5"
+    events "^3.3.0"
+    exponential-backoff "^3.1.0"
+    fastestsmallesttextencoderdecoder "^1.0.22"
+    frame-stream "^3.0.1"
+    lodash.throttle "^4.1.1"
+    loglevel "^1.8.1"
+    long "^5.2.0"
+    protobufjs "^7.1.1"
+    react-native-uuid "^2.0.1"
     sqlite-parser "^1.0.1"
     uuid "^9.0.0"
     walkjs "^3.2.4"
@@ -5323,7 +5350,7 @@ node-dir@^0.1.17:
   dependencies:
     minimatch "^3.0.2"
 
-node-fetch@^2.2.0, node-fetch@^2.6.0:
+node-fetch@2.6.7, node-fetch@^2.2.0, node-fetch@^2.6.0:
   version "2.6.7"
   resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.7.tgz"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
@@ -5903,6 +5930,11 @@ react-native-sqlite-storage@^6.0.1:
   version "6.0.1"
   resolved "https://registry.npmjs.org/react-native-sqlite-storage/-/react-native-sqlite-storage-6.0.1.tgz"
   integrity sha512-1tDFjrint6X6qSYKf3gDyz+XB+X79jfiL6xTugKHPRtF0WvqMtVgdLuNqZunIXjNEvNtNVEbXaeZ6MsguFu00A==
+
+react-native-uuid@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-uuid/-/react-native-uuid-2.0.1.tgz#ed4e2dfb1683eddb66967eb5dca140dfe1abddb9"
+  integrity sha512-cptnoIbL53GTCrWlb/+jrDC6tvb7ypIyzbXNJcpR3Vab0mkeaaVd5qnB3f0whXYzS+SMoSQLcUUB0gEWqkPC0g==
 
 react-native@0.70.1:
   version "0.70.1"

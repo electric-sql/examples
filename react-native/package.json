@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "electric-sql": "^0.3.7",
+    "electric-sql": "https://github.com/electric-sql/typescript-client#f01954b290738d21e2bf5178100a7749a8abd928",
     "react": "18.1.0",
     "react-native": "0.70.1",
     "react-native-sqlite-storage": "^6.0.1"
