@@ -1,7 +1,7 @@
 /*
 
-  This is the electrified, end point of the example code
-  you should get to at the end of the Quickstart guide.
+  This is the end point of the example code that you should
+  get to at the end of the Quickstart guide.
 
   You should get the same code by following the instructions
   in the Quickstart guide and/or by following the comments
@@ -22,19 +22,21 @@
 
 
 */
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Example.css'
 
 import { ElectrifiedDatabase, initElectricSqlJs } from 'electric-sql/browser'
+import { configure } from 'electric-sql/config'
 import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
-import { insecureAuthToken } from './auth'
-import config from '../electric-config'
 
 const locateOpts = {
   locateFile: (file: string) => `/${file}`
 }
 
-// N.b.: don't forget to also uncomment the source of the `./worker.js` file.
+import app from '../electric.json'
+import migrations from '../migrations/dist'
+const config = configure(app, migrations)
+
 const worker = new Worker("./worker.js", { type: "module" });
 
 export const Example = () => {
@@ -42,10 +44,8 @@ export const Example = () => {
 
   useEffect(() => {
     const init = async () => {
-      const auth = await insecureAuthToken(config.app, config.env, "dummy-user")
-
       const SQL = await initElectricSqlJs(worker, locateOpts)
-      const electrified = await SQL.openDatabase('example.db', {...auth, ...config})
+      const electrified = await SQL.openDatabase('example.db', config)
 
       setDb(electrified)
     }

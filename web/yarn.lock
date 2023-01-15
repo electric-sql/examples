@@ -108,17 +108,24 @@ base-64@^1.0.0:
   resolved "https://registry.yarnpkg.com/base-64/-/base-64-1.0.0.tgz#09d0f2084e32a3fd08c2475b973788eee6ae8f4a"
   integrity sha512-kwDPIFCGx0NZHog36dj+tHiwP4QMzsZ3AgMViUBKI0+V5n4U0ufTCUMhnQ04diaRI8EX/QcPfql7zlhZ7j4zgg==
 
+cross-fetch@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.5.tgz#e1389f44d9e7ba767907f7af8454787952ab534f"
+  integrity sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==
+  dependencies:
+    node-fetch "2.6.7"
+
 csstype@^3.0.2:
   version "3.1.1"
   resolved "https://registry.npmjs.org/csstype/-/csstype-3.1.1.tgz"
   integrity sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==
 
-electric-sql@^0.3.7:
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/electric-sql/-/electric-sql-0.3.7.tgz#fe29b3ff3a66aea3602760b471fb0e42f71d6dc0"
-  integrity sha512-bZ5s1jC3H/dUAlgI3j1O2oVUh5+eptwL8TUpjM1iFkNYOUlUoXiAmGXowsxyxjziqY15dYFcRdUhd+2FUECBdg==
+"electric-sql@https://github.com/electric-sql/typescript-client#f01954b290738d21e2bf5178100a7749a8abd928":
+  version "0.3.12"
+  resolved "https://github.com/electric-sql/typescript-client#f01954b290738d21e2bf5178100a7749a8abd928"
   dependencies:
     base-64 "^1.0.0"
+    cross-fetch "^3.1.5"
     events "^3.3.0"
     exponential-backoff "^3.1.0"
     fastestsmallesttextencoderdecoder "^1.0.22"
@@ -127,6 +134,7 @@ electric-sql@^0.3.7:
     loglevel "^1.8.1"
     long "^5.2.0"
     protobufjs "^7.1.1"
+    react-native-uuid "^2.0.1"
     sqlite-parser "^1.0.1"
     uuid "^9.0.0"
     walkjs "^3.2.4"
@@ -212,6 +220,13 @@ loose-envify@^1.1.0:
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
+node-fetch@2.6.7:
+  version "2.6.7"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
+  integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
+  dependencies:
+    whatwg-url "^5.0.0"
+
 object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz"
@@ -244,6 +259,11 @@ react-dom@^17.0.2:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
+react-native-uuid@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-uuid/-/react-native-uuid-2.0.1.tgz#ed4e2dfb1683eddb66967eb5dca140dfe1abddb9"
+  integrity sha512-cptnoIbL53GTCrWlb/+jrDC6tvb7ypIyzbXNJcpR3Vab0mkeaaVd5qnB3f0whXYzS+SMoSQLcUUB0gEWqkPC0g==
+
 react@^17.0.2:
   version "17.0.2"
   resolved "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
@@ -269,6 +289,11 @@ sqlite-parser@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/sqlite-parser/-/sqlite-parser-1.0.1.tgz#110183f2682f04ac6c7d8ad09c44446ef976d5ec"
   integrity sha512-/es+YmgQG+VFbwAQD0Nd0Mdzgky8rW3M85zcy2+Vtk3Sj5ydaMl/lopWPehsjsByGw/swVuXSBeMJFh47doRUw==
+
+tr46@~0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
+  integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
 
 typescript@^4.3.5:
   version "4.9.4"
@@ -296,6 +321,19 @@ walkjs@^3.2.4:
   integrity sha512-pBwB51XwCQr6YdfL2cD7xY/oAir9mNF0OrReFYxs3BC1Ft4tDdXGJOUVODthqYkomh3siIbbm/i6bg0pbGUM6g==
   dependencies:
     typescript "^4.3.5"
+
+webidl-conversions@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-3.0.1.tgz#24534275e2a7bc6be7bc86611cc16ae0a5654871"
+  integrity sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==
+
+whatwg-url@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/whatwg-url/-/whatwg-url-5.0.0.tgz#966454e8765462e37644d3626f6742ce8b70965d"
+  integrity sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==
+  dependencies:
+    tr46 "~0.0.3"
+    webidl-conversions "^3.0.0"
 
 ws@^8.8.1:
   version "8.11.0"
