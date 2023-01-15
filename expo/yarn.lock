@@ -2868,12 +2868,12 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
-electric-sql@^0.3.7:
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/electric-sql/-/electric-sql-0.3.7.tgz#fe29b3ff3a66aea3602760b471fb0e42f71d6dc0"
-  integrity sha512-bZ5s1jC3H/dUAlgI3j1O2oVUh5+eptwL8TUpjM1iFkNYOUlUoXiAmGXowsxyxjziqY15dYFcRdUhd+2FUECBdg==
+"electric-sql@https://github.com/electric-sql/typescript-client#f01954b290738d21e2bf5178100a7749a8abd928":
+  version "0.3.12"
+  resolved "https://github.com/electric-sql/typescript-client#f01954b290738d21e2bf5178100a7749a8abd928"
   dependencies:
     base-64 "^1.0.0"
+    cross-fetch "^3.1.5"
     events "^3.3.0"
     exponential-backoff "^3.1.0"
     fastestsmallesttextencoderdecoder "^1.0.22"
@@ -2882,6 +2882,7 @@ electric-sql@^0.3.7:
     loglevel "^1.8.1"
     long "^5.2.0"
     protobufjs "^7.1.1"
+    react-native-uuid "^2.0.1"
     sqlite-parser "^1.0.1"
     uuid "^9.0.0"
     walkjs "^3.2.4"
@@ -5378,6 +5379,11 @@ react-native-gradle-plugin@^0.0.7:
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.0.7.tgz#96602f909745239deab7b589443f14fce5da2056"
   integrity sha512-+4JpbIx42zGTONhBTIXSyfyHICHC29VTvhkkoUOJAh/XHPEixpuBduYgf6Y4y9wsN1ARlQhBBoptTvXvAFQf5g==
 
+react-native-uuid@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-uuid/-/react-native-uuid-2.0.1.tgz#ed4e2dfb1683eddb66967eb5dca140dfe1abddb9"
+  integrity sha512-cptnoIbL53GTCrWlb/+jrDC6tvb7ypIyzbXNJcpR3Vab0mkeaaVd5qnB3f0whXYzS+SMoSQLcUUB0gEWqkPC0g==
+
 react-native@0.69.6:
   version "0.69.6"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.69.6.tgz#cdd1a5757d902b91b165c28fdda4e518ed6f683a"
@@ -6667,9 +6673,9 @@ ws@^7, ws@^7.5.1:
   integrity sha512-F+P9Jil7UiSKSkppIiD94dN07AwvFixvLIj1Og1Rl9GGMuNipJnV9JzjD6XuqmAeiswGvUmNLjr5cFuXwNS77Q==
 
 ws@^8.8.1:
-  version "8.11.0"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.11.0.tgz#6a0d36b8edfd9f96d8b25683db2f8d7de6e8e143"
-  integrity sha512-HPG3wQd9sNQoT9xHyNCXoDUa+Xw/VevmY9FoHyQ+g+rrMn4j6FB4np7Z0OhdTgjx6MgQLK7jwSy1YecU1+4Asg==
+  version "8.12.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.12.0.tgz#485074cc392689da78e1828a9ff23585e06cddd8"
+  integrity sha512-kU62emKIdKVeEIOIKVegvqpXMSTAMLJozpHZaJNDYqBjzlSYXQGviYwN1osDLJ9av68qHd4a2oSjd7yD4pacig==
 
 xcode@^3.0.1:
   version "3.0.1"
