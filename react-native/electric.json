@@ -1,5 +1,5 @@
 {
-  "app": "glossy-party-1694",
+  "app": "items-example",
   "env": "default",
   "migrations": "migrations"
 }
