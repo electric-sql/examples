@@ -1,4 +1,4 @@
-import React, {type PropsWithChildren} from 'react';
+import React, {type PropsWithChildren} from 'react'
 import {
   SafeAreaView,
   ScrollView,
@@ -7,18 +7,18 @@ import {
   Text,
   useColorScheme,
   View,
-} from 'react-native';
+} from 'react-native'
 
-import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
+import {Colors, Header} from 'react-native/Libraries/NewAppScreen'
 
-import {ElectrifiedExample} from './src/Example';
+import {ElectrifiedExample} from './src/Example'
 
 const Section: React.FC<
   PropsWithChildren<{
-    title: string;
+    title: string
   }>
 > = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const isDarkMode = useColorScheme() === 'dark'
   return (
     <View style={styles.sectionContainer}>
       <Text
@@ -40,15 +40,15 @@ const Section: React.FC<
         {children}
       </Text>
     </View>
-  );
-};
+  )
+}
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const isDarkMode = useColorScheme() === 'dark'
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  }
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -70,8 +70,8 @@ const App = () => {
         </View>
       </ScrollView>
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   sectionContainer: {
@@ -90,6 +90,6 @@ const styles = StyleSheet.create({
   highlight: {
     fontWeight: '700',
   },
-});
+})
 
-export default App;
+export default App
