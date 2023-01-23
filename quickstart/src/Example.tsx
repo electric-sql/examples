@@ -3,7 +3,6 @@ import './Example.css'
 
 // XXX Uncomment these imports.
 // import { ElectrifiedDatabase, initElectricSqlJs } from 'electric-sql/browser'
-// import { configure } from 'electric-sql/config'
 // import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
 
 // XXX Delete this in favour of `initElectricSqlJs`.
@@ -17,9 +16,7 @@ const locateOpts = {
 }
 
 // XXX Import your application config and bundled migrations.
-// import app from '../electric.json'
-// import migrations from '../migrations/dist'
-// const config = configure(app, migrations)
+// import config from '../.electric/@config'
 
 // XXX Enable the ElectricSQL worker.
 // XXX N.b.: don't forget to also uncomment the source of the `./worker.js` file.
