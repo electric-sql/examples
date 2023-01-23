@@ -107,10 +107,8 @@ const ExampleComponent = () => {
   }
 
   const addItem = () => {
-    const randomValue = Math.random().toString(16).substr(2);
-
     db.transaction(tx => {
-      tx.executeSql('INSERT INTO items VALUES(?)', [randomValue]);
+      tx.executeSql('INSERT INTO items VALUES(?)', [uuidv4()]);
     });
   };
 

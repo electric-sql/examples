@@ -1,3 +1,6 @@
+import 'react-native-get-random-values'
+import { v4 as uuidv4 } from 'uuid'
+
 import React, {useEffect, useState} from 'react'
 import {Pressable, Text, View} from 'react-native'
 
@@ -58,10 +61,8 @@ const ExampleComponent = () => {
   }
 
   const addItem = () => {
-    const randomValue = Math.random().toString(16).substr(2)
-
     db.transaction(tx => {
-      tx.executeSql('INSERT INTO items VALUES(?)', [randomValue])
+      tx.executeSql('INSERT INTO items VALUES(?)', [uuidv4()])
     })
   }
 
@@ -73,12 +74,11 @@ const ExampleComponent = () => {
 
   return (
     <View>
-      {results.map((item, index) => (
+      {results && results.map((item: any, index: any) => (
         <Text key={index} style={styles.item}>
           Item: {item.value}
         </Text>
       ))}
-
       <Pressable style={styles.button} onPress={addItem}>
         <Text style={styles.text}>Add</Text>
       </Pressable>

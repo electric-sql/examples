@@ -17,10 +17,13 @@
     "expo-status-bar": "~1.4.0",
     "react": "18.0.0",
     "react-native": "0.69.6",
-    "typescript": "^4.8.4"
+    "react-native-get-random-values": "^1.8.0",
+    "typescript": "^4.8.4",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "@types/uuid": "^9.0.0"
   },
   "peerDependenciesMeta": {
     "ws": {
