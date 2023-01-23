@@ -1,4 +1,4 @@
-import {data} from './migrations';
+import {data} from './migrations'
 
 const config = {
   app: 'example-app',
@@ -9,6 +9,6 @@ const config = {
     ssl: false,
   },
   migrations: data.migrations,
-};
+}
 
-export default config;
+export default config
