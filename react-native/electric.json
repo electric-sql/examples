@@ -1,0 +1,14 @@
+{
+  "app": "items-example",
+  "debug": false,
+  "defaultEnv": "default",
+  "directories": {
+    "migrations": "migrations",
+    "output": ".electric"
+  },
+  "environments": {
+    "default": {
+      "slug": "default"
+    }
+  }
+}

@@ -9,7 +9,9 @@ import {Database, ElectrifiedDatabase, electrify} from 'electric-sql/react-nativ
 import {ElectricProvider, useElectric, useElectricQuery} from 'electric-sql/react'
 
 import {styles} from './Styles'
-import config from '../electric-config'
+// Vanilla metro doesn't support symlinks, so we import the config
+// bundle by explicit path rather than `../.electric/@config`.
+import config from '../.electric/items-example/default'
 
 const promisesEnabled = true
 SQLite.enablePromise(promisesEnabled)
@@ -19,7 +21,7 @@ export const ElectrifiedExample = () => {
 
   useEffect(() => {
     const init = async () => {
-      const original = await SQLite.openDatabase({name: 'example.db'}) as unknown as Database
+      const original = await SQLite.openDatabase({name: 'rn-example.db'}) as unknown as Database
 
       const electrified = await electrify(original, promisesEnabled, config)
       setDb(electrified)
