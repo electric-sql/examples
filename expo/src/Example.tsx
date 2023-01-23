@@ -8,8 +8,11 @@ import * as SQLite from "expo-sqlite"
 import {Database, ElectrifiedDatabase, electrify} from 'electric-sql/expo'
 import {ElectricProvider, useElectric, useElectricQuery} from 'electric-sql/react'
 
-import {styles} from './Styles';
-import config from '../electric-config';
+import {styles} from './Styles'
+
+// Vanilla metro doesn't support symlinks, so we import the config
+// bundle by explicit path rather than `../.electric/@config`.
+import config from '../.electric/items-example/default'
 
 export const ElectrifiedExample = () => {
   const [db, setDb] = useState<ElectrifiedDatabase>()
