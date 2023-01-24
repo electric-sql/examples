@@ -1821,6 +1821,11 @@
   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
 
+"@types/uuid@^9.0.0":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-9.0.0.tgz#53ef263e5239728b56096b0a869595135b7952d2"
+  integrity sha512-kr90f+ERiQtKWMz5rP32ltJ/BtULDI5RVO0uavn1HQUOwjx0R1h0rnDYNL0CepF1zL5bSY6FISAfd9tOdDhU5Q==
+
 "@types/yargs-parser@*":
   version "21.0.0"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-21.0.0.tgz#0c60e537fa790f5f9472ed2776c2b71ec117351b"
@@ -2868,12 +2873,13 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
-electric-sql@^0.3.7:
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/electric-sql/-/electric-sql-0.3.7.tgz#fe29b3ff3a66aea3602760b471fb0e42f71d6dc0"
-  integrity sha512-bZ5s1jC3H/dUAlgI3j1O2oVUh5+eptwL8TUpjM1iFkNYOUlUoXiAmGXowsxyxjziqY15dYFcRdUhd+2FUECBdg==
+electric-sql@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/electric-sql/-/electric-sql-0.4.1.tgz#01800da634462f787e3c9347021c1c9f9842b1ab"
+  integrity sha512-2/F6TipEvQxBaFHdtMPYgIdfZAvIn+Wio6j/U2xtIizrS5FwQU5nUmIxwYnr+UrHMwkUrb4U1EYXp3I00IBwEA==
   dependencies:
     base-64 "^1.0.0"
+    cross-fetch "^3.1.5"
     events "^3.3.0"
     exponential-backoff "^3.1.0"
     fastestsmallesttextencoderdecoder "^1.0.22"
@@ -2882,6 +2888,7 @@ electric-sql@^0.3.7:
     loglevel "^1.8.1"
     long "^5.2.0"
     protobufjs "^7.1.1"
+    react-native-uuid "^2.0.1"
     sqlite-parser "^1.0.1"
     uuid "^9.0.0"
     walkjs "^3.2.4"
@@ -3160,6 +3167,11 @@ extglob@^2.0.4:
     regex-not "^1.0.0"
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
+
+fast-base64-decode@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/fast-base64-decode/-/fast-base64-decode-1.0.0.tgz#b434a0dd7d92b12b43f26819300d2dafb83ee418"
+  integrity sha512-qwaScUgUGBYeDNRnbc/KyllVU88Jk1pRHPStuF/lO7B0/RTRLj7U0lkdTAutlBblY08rwZDff6tNU9cjv6j//Q==
 
 fast-glob@^3.2.5, fast-glob@^3.2.9:
   version "3.2.12"
@@ -5373,10 +5385,22 @@ react-native-codegen@^0.69.2:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
+react-native-get-random-values@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/react-native-get-random-values/-/react-native-get-random-values-1.8.0.tgz#1cb4bd4bd3966a356e59697b8f372999fe97cb16"
+  integrity sha512-H/zghhun0T+UIJLmig3+ZuBCvF66rdbiWUfRSNS6kv5oDSpa1ZiVyvRWtuPesQpT8dXj+Bv7WJRQOUP+5TB1sA==
+  dependencies:
+    fast-base64-decode "^1.0.0"
+
 react-native-gradle-plugin@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.0.7.tgz#96602f909745239deab7b589443f14fce5da2056"
   integrity sha512-+4JpbIx42zGTONhBTIXSyfyHICHC29VTvhkkoUOJAh/XHPEixpuBduYgf6Y4y9wsN1ARlQhBBoptTvXvAFQf5g==
+
+react-native-uuid@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-uuid/-/react-native-uuid-2.0.1.tgz#ed4e2dfb1683eddb66967eb5dca140dfe1abddb9"
+  integrity sha512-cptnoIbL53GTCrWlb/+jrDC6tvb7ypIyzbXNJcpR3Vab0mkeaaVd5qnB3f0whXYzS+SMoSQLcUUB0gEWqkPC0g==
 
 react-native@0.69.6:
   version "0.69.6"

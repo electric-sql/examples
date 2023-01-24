@@ -25,59 +25,57 @@ git clone https://github.com/electric-sql/examples
 cd examples/web
 ```
 
-Install the dependencies, either using Yarn:
+Install the dependencies:
 
 ```sh
 yarn
 ```
 
-Or using npm:
-
-```sh
-npm install
-```
-
-## Configure
-
-As a local-first system, ElectricSQL defaults to working without a backend. So you can run this example application without connecting to a replication service. However, to run with replication working, you'll need to configure a backend to connect to.
-
-The simplest way is to [sign up to ElectricSQL](https://console.electric-sql.com/auth/signup) and create an application. This will give you a globally unique `app` slug. Paste this into your [application config](https://electric-sql.com/docs/usage/configure) in [`./electric-config.js`](./electric-config.js).
-
-Alternatively, see [these instructions](https://github.com/electric-sql/examples#running-the-backend-locally) to run and connect to the backend locally.
-
 ## Run
 
-Build:
-
-```sh
-yarn build
-```
-
-Run:
+Build and run:
 
 ```sh
 yarn start
 ```
 
-Open [localhost:3000](http://localhost:3000) in two different browsers (so they're backed by different databases) and try it out. You'll see data being replicated between the client applications.
+## Sync
+
+The application is setup to automatically sync via the cloud (when connected).
+
+Open [localhost:3001](http://localhost:3001) in two different browsers (so they're backed by different databases) and try it out. You'll see data being replicated between the client applications.
+
+See [Running the Examples](https://electric-sql.com/docs/overview/examples) for information on how to:
+
+- [connect to your own sync service](https://electric-sql.com/docs/overview/examples#option-2--connect-to-your-own-sync-service)
+- [run the backend locally](https://electric-sql.com/docs/overview/examples#option-3--run-the-backend-locally)
 
 ## Notes on the code
 
 Electric uses SQL.js in the browser with absurd-sql for persistence. This runs in a web worker (which we also use to keep background replication off the main thread). As a result, the electrified db client provides an asynchronous version of a subset of the [SQL.js driver interface](https://sql.js.org/documentation).
 
-The main code to look at is in [`./src/App.tsx`](./src/App.tsx).
+The main code to look at is in [`./src/Example.tsx`](./src/Example.tsx):
 
 ```tsx
 const worker = new Worker("./worker.js", { type: "module" });
 
-export const ElectrifiedExample = () => {
+export const Example = () => {
   const [ db, setDb ] = useState<ElectrifiedDatabase>()
 
   useEffect(() => {
-    initElectricSqlJs(worker, {locateFile: (file: string) => `/${file}`})
-      .then((SQL) => SQL.openDatabase('example.db'))
-      .then((db) => setDb(db))
+    const init = async () => {
+      const SQL = await initElectricSqlJs(worker, locateOpts)
+      const electrified = await SQL.openDatabase('example.db', config)
+
+      setDb(electrified)
+    }
+
+    init()
   }, [])
+
+  if (db === undefined) {
+    return null
+  }
 
   return (
     <ElectricProvider db={db}>
@@ -91,47 +89,32 @@ This spins up a web worker, initialises the persistence machinery, opens an elec
 
 ```tsx
 const ExampleComponent = () => {
-  const { results, error } = useElectricQuery('SELECT value FROM items', [])
   const db = useElectric() as ElectrifiedDatabase
-
-  if (error !== undefined) {
-    return (
-      <div>
-        <p className='text'>
-          Error: { `${error}` }
-        </p>
-      </div>
-    )
-  }
-
-  if (db === undefined || results === undefined) {
-    return null
-  }
+  const { results } = useElectricQuery('SELECT value FROM items', [])
 
   const addItem = () => {
-    const randomValue = Math.random().toString(16).substr(2)
-
-    db.exec('INSERT INTO items VALUES(?)', [randomValue])
+    db.run('INSERT INTO items VALUES(?)', [crypto.randomUUID()])
   }
 
   const clearItems = () => {
-    db.exec('DELETE FROM items where true')
+    db.run('DELETE FROM items where true')
   }
 
   return (
     <div>
-      {results.map((item: any, index: any) => (
+      <div className='controls'>
+        <button className='button' onClick={addItem}>
+          Add
+        </button>
+        <button className='button' onClick={clearItems}>
+          Clear
+        </button>
+      </div>
+      {results && results.map((item: any, index: any) => (
         <p key={ index } className='item'>
-          Item: { item.value }
+          <code>{ item.value }</code>
         </p>
       ))}
-
-      <button className='button' onClick={addItem}>
-        <p className='text'>Add</p>
-      </button>
-      <button className='button' onClick={clearItems}>
-      <p className='text'>Clear</p>
-      </button>
     </div>
   )
 }

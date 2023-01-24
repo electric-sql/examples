@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native'
 
 export const styles = StyleSheet.create({
   button: {
@@ -34,4 +34,4 @@ export const styles = StyleSheet.create({
     letterSpacing: 0.25,
     color: 'white',
   },
-});
+})

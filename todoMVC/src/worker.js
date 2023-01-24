@@ -1,3 +1,4 @@
-import { ElectricWorker } from "electric-sql/browser";
+import { ElectricWorker } from 'electric-sql/browser'
 
-ElectricWorker.start(self, {});
+// eslint-disable-next-line no-undef
+ElectricWorker.start(self, {})

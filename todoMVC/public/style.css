@@ -4,6 +4,10 @@ body {
   padding: 0;
 }
 
+.debug {
+  margin: 5px;
+}
+
 button {
   margin: 0;
   padding: 0;
@@ -19,6 +23,13 @@ button {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   cursor: pointer;
+}
+
+.debug .button {
+  margin: 5px;
+  padding: 5px;
+  border: 1px;
+  background: #dbdbdb;
 }
 
 body {

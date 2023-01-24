@@ -29,16 +29,10 @@ git clone https://github.com/electric-sql/examples
 cd examples/react-native
 ```
 
-Install the dependencies, either using Yarn:
+Install the dependencies:
 
 ```sh
 yarn
-```
-
-Or using npm:
-
-```sh
-npm install
 ```
 
 Install the [pods](https://cocoapods.org):
@@ -48,12 +42,6 @@ cd ios && pod install && cd ..
 ```
 
 You may want to also check the [install section of the react-native-sqlite-storage driver README](https://github.com/andpor/react-native-sqlite-storage#installation).
-
-## Configure
-
-As a local-first system, ElectricSQL defaults to working without a backend. So you can run this example application without connecting to a replication service. However, to run with replication working, you'll need to configure a backend to connect to. The simplest way is to [sign up to ElectricSQL](https://console.electric-sql.com/auth/signup) and create an application. This will give you a globally unique `app` slug. Paste this into your [application config](https://electric-sql.com/docs/usage/configure) in [`./electric-config.js`](./electric-config.js).
-
-Alternatively, see [these instructions](https://github.com/electric-sql/examples#running-the-backend-locally) to run and connect to the backend locally.
 
 ## Run
 
@@ -74,6 +62,13 @@ Or open in Xcode:
 ```sh
 open ios/ElectricSQLExample.xcworkspace
 ```
+
+## Sync
+
+The application is setup to autmatically sync via the cloud (when connected). See [Running the Examples](https://electric-sql.com/docs/overview/examples) for information on how to:
+
+- [connect to your own sync service](https://electric-sql.com/docs/overview/examples#option-2--connect-to-your-own-sync-service)
+- [run the backend locally](https://electric-sql.com/docs/overview/examples#option-3--run-the-backend-locally)
 
 ## Notes on the code
 
@@ -121,10 +116,8 @@ const ExampleComponent = () => {
   }
 
   const addItem = () => {
-    const randomValue = Math.random().toString(16).substr(2);
-
     db.transaction(tx => {
-      tx.executeSql('INSERT INTO items VALUES(?)', [randomValue]);
+      tx.executeSql('INSERT INTO items VALUES(?)', [uuidv4()]);
     });
   };
 

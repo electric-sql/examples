@@ -1,30 +1,31 @@
 {
-  "name": "react",
-  "version": "1.0.0",
+  "name": "electric-sql-web-example",
+  "version": "0.1.0",
   "main": "builder.js",
   "author": "Valter Balegas",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "build": "node builder.js",
     "build-prod": "NODE_ENV=production node builder.js",
-    "start": "npx lite-server --baseDir=dist"
+    "start": "SERVE=true node builder.js"
+  },
+  "engines": {
+    "node": ">=16.11.0"
   },
   "dependencies": {
-    "@aphro/absurd-sql": "^0.0.53",
+    "@aphro/absurd-sql": "0.0.53",
     "@aphro/sql.js": "^1.7.0",
-    "electric-sql": "^0.3.7",
+    "electric-sql": "^0.4.1",
     "fs-extra": "^10.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@types/live-server": "^1.2.1",
     "@types/node": "^16.9.1",
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
     "esbuild": "^0.12.26",
     "esbuild-plugin-inline-image": "^0.0.8",
-    "lite-server": "^2.6.1",
     "typescript": "^4.4.3"
   }
 }

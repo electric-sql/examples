@@ -1,0 +1,14 @@
+{
+  "app": "debonair-navy-9026",
+  "debug": false,
+  "defaultEnv": "default",
+  "directories": {
+    "migrations": "migrations",
+    "output": ".electric"
+  },
+  "environments": {
+    "default": {
+      "slug": "default"
+    }
+  }
+}
