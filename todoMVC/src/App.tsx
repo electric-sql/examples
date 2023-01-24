@@ -1,29 +1,42 @@
 import React, { memo, useCallback, useEffect, useState } from 'react'
-import './App.css'
 import './style.css'
 
-import { createTodo, resultsToTodos, Todo, TodoList } from './model/todo/model'
-import { ElectrifiedDatabase, initElectricSqlJs } from 'electric-sql/browser'
-import { ElectricProvider, useElectricQuery } from 'electric-sql/react'
+import { createTodo, resultsToTodos, Todo } from './model/todo/model'
+import {
+  Database,
+  ElectrifiedDatabase,
+  initElectricSqlJs,
+} from 'electric-sql/browser'
+import {
+  ElectricProvider,
+  useConnectivityState,
+  useElectricQuery,
+} from 'electric-sql/react'
 import { TodoRepository } from './model/todo/repository'
 import { TodoListRepository } from './model/todolist/repository'
-import { v4 as uuid } from 'uuid';
-import { createTodoList, resultsToTodoList } from './model/todolist/model'
+import { v4 as uuid } from 'uuid'
+import {
+  createTodoList,
+  resultsToTodoList,
+  TodoList,
+} from './model/todolist/model'
 import config from '../electric-config'
-import * as Debug from 'electric-sql/debug';
+import * as Debug from 'electric-sql/debug'
 
 type Repositories = {
-  todoRepo: TodoRepository,
-  todoListRepo: TodoListRepository,
+  todoRepo: TodoRepository
+  todoListRepo: TodoListRepository
 }
 
-// for holding a debug context available on global scope 
-const debugContext = new Object();
+type createTodo = (text: string, completed?: boolean) => Promise<Database>
 
-const worker = new Worker("./worker.js", { type: "module" });
+// for holding a debug context available on global scope
+const debugContext: Debug.DebugContext = new Object()
 
-function Header({ listid, repositories: { todoRepo } }: { listid: string, repositories: Repositories }) {
-  const [newText, setNewText] = useState<string>("")
+const worker = new Worker('./worker.js', { type: 'module' })
+
+function Header({ createTodo }: { createTodo: createTodo }) {
+  const [newText, setNewText] = useState<string>('')
 
   return (
     <header className="header">
@@ -36,11 +49,10 @@ function Header({ listid, repositories: { todoRepo } }: { listid: string, reposi
         value={newText}
         onChange={(e) => setNewText(e.target.value)}
         onKeyUp={(e) => {
-          const target = e.target as HTMLInputElement;
-          if (e.key === "Enter" && target.value.trim() !== "") {
-            const todo = createTodo(uuid(), listid, target.value)
-            todoRepo.save(todo)
-            setNewText("");
+          const target = e.target as HTMLInputElement
+          if (e.key === 'Enter' && target.value.trim() !== '') {
+            createTodo(target.value)
+            setNewText('')
           }
         }}
       />
@@ -48,64 +60,62 @@ function Header({ listid, repositories: { todoRepo } }: { listid: string, reposi
   )
 }
 
-const TodoView = memo(
-  ({
-    todo,
-    editing,
-    startEditing,
-    saveTodo,
-    toggleTodo,
-    deleteTodo
-  }: {
-    key?: any;
-    todo: Todo;
-    editing: boolean;
-    startEditing: (t: Todo) => void;
-    saveTodo: (todo: Todo, text: string) => void;
-    toggleTodo: (todo: Todo) => void;
-    deleteTodo: (todo: Todo) => void;
-  }) => {
-    let body;
+const TodoView = memo(function Todo({
+  todo,
+  editing,
+  startEditing,
+  saveTodo,
+  toggleTodo,
+  deleteTodo,
+}: {
+  key?: string
+  todo: Todo
+  editing: boolean
+  startEditing: (t: Todo) => void
+  saveTodo: (todo: Todo, text: string) => void
+  toggleTodo: (todo: Todo) => void
+  deleteTodo: (todo: Todo) => void
+}) {
+  let body
 
-    const [text, setText] = useState(todo.text);
+  const [text, setText] = useState(todo.text)
 
-    if (editing) {
-      body = (
+  if (editing) {
+    body = (
+      <input
+        type="text"
+        className="edit"
+        autoFocus
+        value={text}
+        onBlur={() => saveTodo(todo, text)}
+        onKeyUp={(e) => e.key === 'Enter' && saveTodo(todo, text)}
+        onChange={(e) => setText(e.target.value)}
+      />
+    )
+  } else {
+    body = (
+      <div className="view">
         <input
-          type="text"
-          className="edit"
-          autoFocus
-          value={text}
-          onBlur={() => saveTodo(todo, text)}
-          onKeyUp={(e) => e.key === "Enter" && saveTodo(todo, text)}
-          onChange={(e) => setText(e.target.value)}
+          type="checkbox"
+          className="toggle"
+          checked={todo.completed}
+          onChange={() => toggleTodo(todo)}
         />
-      );
-    } else {
-      body = (
-        <div className="view">
-          <input
-            type="checkbox"
-            className="toggle"
-            checked={todo.completed}
-            onChange={() => toggleTodo(todo)}
-          />
-          <label onDoubleClick={() => startEditing(todo)}>{todo.text}</label>
-          <button className="destroy" onClick={() => deleteTodo(todo)} />
-        </div>
-      );
-    }
-    return (
-      <li
-        className={
-          (todo.completed ? "completed " : "") + (editing ? "editing" : "")
-        }
-      >
-        {body}
-      </li>
-    );
+        <label onDoubleClick={() => startEditing(todo)}>{todo.text}</label>
+        <button className="destroy" onClick={() => deleteTodo(todo)} />
+      </div>
+    )
   }
-);
+  return (
+    <li
+      className={
+        (todo.completed ? 'completed ' : '') + (editing ? 'editing' : '')
+      }
+    >
+      {body}
+    </li>
+  )
+})
 
 function Footer({
   remaining,
@@ -114,49 +124,48 @@ function Footer({
   clearCompleted,
   updateTodoList,
 }: {
-  remaining: number;
-  todos: Todo[];
-  todoList: TodoList;
-  clearCompleted: () => void;
-  updateTodoList: (list: TodoList) => Promise<void>
+  remaining: number
+  todos: Todo[]
+  todoList: TodoList
+  clearCompleted: () => void
+  updateTodoList: (list: TodoList) => Promise<Database>
 }) {
-  let clearCompletedButton;
+  let clearCompletedButton
   if (remaining !== todos.length) {
     clearCompletedButton = (
       <button className="clear-completed" onClick={clearCompleted}>
         Clear completed
       </button>
-    );
+    )
   }
-  
+
   return (
     <footer className="footer">
       <span className="todo-count">
         <strong> {remaining} </strong>
-        {remaining === 1 ? "item" : "items"} left
+        {remaining === 1 ? 'item' : 'items'} left
       </span>
       <ul className="filters">
         <li>
           <a
-            className={todoList.filter === "all" ? "selected" : ""}
-            onClick={() => updateTodoList({ ...todoList, filter: "all" })}
+            className={todoList.filter === 'all' ? 'selected' : ''}
+            onClick={() => updateTodoList({ ...todoList, filter: 'all' })}
           >
-            {" "}
-            All{" "}
+            All
           </a>
         </li>
         <li>
           <a
-            className={todoList.filter === "active" ? "selected" : ""}
-            onClick={() => updateTodoList({ ...todoList, filter: "active" })}
+            className={todoList.filter === 'active' ? 'selected' : ''}
+            onClick={() => updateTodoList({ ...todoList, filter: 'active' })}
           >
             Active
           </a>
         </li>
         <li>
           <a
-            className={todoList.filter === "completed" ? "selected" : ""}
-            onClick={() => updateTodoList({ ...todoList, filter: "completed" })}
+            className={todoList.filter === 'completed' ? 'selected' : ''}
+            onClick={() => updateTodoList({ ...todoList, filter: 'completed' })}
           >
             Completed
           </a>
@@ -167,32 +176,61 @@ function Footer({
   )
 }
 
-function TodoMVC({ listid, repositories: { todoListRepo, todoRepo } }: {
-  listid: string,
-  repositories: Repositories,
+function TodoMVC({
+  listid,
+  clientId,
+  repositories: { todoListRepo, todoRepo },
+}: {
+  listid: string
+  clientId: string
+  repositories: Repositories
 }) {
+  const { connectivityState, toggleConnectivityState } = useConnectivityState()
 
-  const startEditing = useCallback((todo: Todo) =>
-    todoListRepo.update({ id: listid, editing: todo.id }), [listid])
+  const startEditing = useCallback(
+    (todo: Todo) => todoListRepo.update({ id: listid, editing: todo.id }),
+    [listid]
+  )
 
-  const saveTodo = useCallback((todo: Todo, text: string) => {
-    todoRepo.update({ ...todo, text })
-    todoListRepo.update({ id: listid, editing: null })
-  }, [listid])
+  const createTodoForList = useCallback(
+    (repo: TodoRepository): createTodo => {
+      return (text, completed) => {
+        const todo = createTodo(uuid(), listid, text, completed)
+        return repo.save(todo)
+      }
+    },
+    [listid]
+  )
+
+  const saveTodo = useCallback(
+    (todo: Todo, text: string) => {
+      todoRepo.update({ ...todo, text })
+      todoListRepo.update({ id: listid, editing: '' })
+    },
+    [listid]
+  )
 
   const deleteTodo = (todo: Todo) => todoRepo.delete(todo)
 
-  const toggleTodo = (todo: Todo) => todoRepo.update({ ...todo, completed: !todo.completed })
+  const toggleTodo = (todo: Todo) =>
+    todoRepo.update({ ...todo, completed: !todo.completed })
 
-  const clearCompleted = () => todoRepo.deleteAll({listid, completed: true})
+  const clearCompleted = () => todoRepo.deleteAll({ listid, completed: true })
 
-  const toggleAll = () => todoRepo.updateAll({ listid, completed: remaining != 0 })
+  const toggleAll = () =>
+    todoRepo.updateAll({ listid, completed: remaining != 0 })
 
-  const updateTodoList = (list: TodoList): Promise<void> => todoListRepo.update(list)
+  const updateTodoList = (list: TodoList): Promise<Database> =>
+    todoListRepo.update(list)
 
-  const todoListQuery = useElectricQuery("SELECT id, editing, filter FROM todolist WHERE id = ?", [listid])
-  const todosQuery = useElectricQuery("SELECT * FROM todo WHERE listid = ?", [listid])
-  
+  const todoListQuery = useElectricQuery(
+    'SELECT id, editing, filter FROM todolist WHERE id = ?',
+    [listid]
+  )
+  const todosQuery = useElectricQuery('SELECT * FROM todo WHERE listid = ?', [
+    listid,
+  ])
+
   if (!todoListQuery.results || !todosQuery.results) {
     return null
   }
@@ -200,14 +238,15 @@ function TodoMVC({ listid, repositories: { todoListRepo, todoRepo } }: {
   const todoList = todoListQuery.results.map(resultsToTodoList)[0]
   const { all, active, completed } = resultsToTodos(todosQuery.results)
 
-  const remaining = active.length;
-  let todos = todoList.filter === "active"
-    ? active
-    : todoList.filter === "completed"
+  const remaining = active.length
+  const todos =
+    todoList.filter === 'active'
+      ? active
+      : todoList.filter === 'completed'
       ? completed
       : all
 
-  let toggleAllCheck;
+  let toggleAllCheck
   if (all.length) {
     toggleAllCheck = (
       <>
@@ -220,82 +259,110 @@ function TodoMVC({ listid, repositories: { todoListRepo, todoRepo } }: {
         />
         <label htmlFor="toggle-all">Mark all as complete</label>
       </>
-    );
+    )
   }
 
   return (
-    <div className="todoapp">
-      <Header listid={listid} repositories={{ todoRepo, todoListRepo }} />
-      <section
-        className="main"
-        style={all.length > 0 ? {} : { display: "none" }}
-      >
-        {toggleAllCheck}
-        <ul className="todo-list">
-          {todos.map((t: any) => (
-            <TodoView
-              key={t.id}
-              todo={t}
-              editing={todoList.editing === t.id}
-              startEditing={startEditing}
-              saveTodo={saveTodo}
-              deleteTodo={deleteTodo}
-              toggleTodo={toggleTodo}
-            />
-          ))}
-        </ul>
-        <Footer
-          remaining={remaining}
-          todos={todos}
-          todoList={todoList}
-          clearCompleted={clearCompleted}
-          updateTodoList={updateTodoList}
-        />
-      </section>
+    <div>
+      <div className="todoapp" id="container">
+        <Header createTodo={createTodoForList(todoRepo)} />
+        <section
+          className="main"
+          style={all.length > 0 ? {} : { display: 'none' }}
+        >
+          {toggleAllCheck}
+          <ul className="todo-list">
+            {todos.map((t: Todo) => (
+              <TodoView
+                key={t.id}
+                todo={t}
+                editing={todoList.editing === t.id}
+                startEditing={startEditing}
+                saveTodo={saveTodo}
+                deleteTodo={deleteTodo}
+                toggleTodo={toggleTodo}
+              />
+            ))}
+          </ul>
+          <Footer
+            remaining={remaining}
+            todos={todos}
+            todoList={todoList}
+            clearCompleted={clearCompleted}
+            updateTodoList={updateTodoList}
+          />
+        </section>
+      </div>
+      <div className="debug">
+        <button className="button" onClick={toggleConnectivityState}>
+          {buttonText(connectivityState)}
+        </button>
+        {debugContext.electric ? (
+          <div style={{ padding: '0px 5px 5px' }}>clientId: {clientId}</div>
+        ) : null}
+      </div>
     </div>
-  );
+  )
 }
 
 function ElectrifiedTodoMVC() {
+  const [clientId, setClientId] = useState<string>('FAKE-CLIENT-ID')
   const [db, setDb] = useState<ElectrifiedDatabase>()
   const [repositories, setRepositories] = useState<Repositories>()
   const [todoList, setTodoList] = useState<TodoList>()
 
   useEffect(() => {
     const init = async () => {
-      
-      const SQL = await initElectricSqlJs(worker, { locateFile: (file: string) => `/${file}` })
+      const SQL = await initElectricSqlJs(worker, {
+        locateFile: (file: string) => `/${file}`,
+      })
       const electrified = await SQL.openDatabase('todoMVC.db', config)
-      
-      if(config.debug) {  
-        Debug.init(electrified, debugContext);
+
+      if (config.debug) {
+        Debug.init(electrified, debugContext)
       }
 
       const todoRepo = new TodoRepository(electrified)
       const todoListRepo = new TodoListRepository(electrified)
 
-        setDb(electrified)
-        setRepositories({todoRepo,todoListRepo})
-        
-      // TODO: Get todoList for user
-      let todoList = await todoListRepo.getById("FAKE-USER-ID")
-      if(!todoList){
-        todoList = createTodoList("FAKE-USER-ID", "all")
-        todoListRepo.save(todoList)        
+      setDb(electrified)
+      setRepositories({ todoRepo, todoListRepo })
+
+      // need a better way of exposing the internal clientId.
+      if (debugContext.query) {
+        const clientId =
+          ((
+            await debugContext.query(
+              `SELECT value FROM _electric_meta WHERE key = 'clientId'`
+            )
+          )[0].value as string) ?? ''
+        setClientId(clientId)
+      }
+
+      let todoList = await todoListRepo.getById(clientId)
+      if (!todoList) {
+        todoList = createTodoList(clientId, 'all')
+        todoListRepo.save(todoList)
       }
       setTodoList(todoList)
     }
 
-    init();
+    init()
   }, [])
 
-  if (db === undefined || repositories === undefined || todoList === undefined) {
+  if (
+    db === undefined ||
+    repositories === undefined ||
+    todoList === undefined ||
+    clientId === undefined
+  ) {
     return null
   }
 
   return (
     <ElectricProvider db={db}>
       <TodoMVC
+        clientId={clientId}
         listid={todoList.id}
         repositories={repositories}
       />
@@ -304,7 +371,18 @@ function ElectrifiedTodoMVC() {
 }
 
 export default function App() {
-  return (
-    <ElectrifiedTodoMVC/>
-  )
+  return <ElectrifiedTodoMVC />
+}
+
+const buttonText = (connectivityState: string) => {
+  switch (connectivityState) {
+    case 'available':
+      return 'connecting'
+    case 'error':
+      return 'retry connecting'
+    case 'connected':
+      return 'disconnect'
+    default:
+      return 'connect'
+  }
 }

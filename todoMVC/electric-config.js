@@ -1,15 +1,15 @@
-import { data } from "./migrations";
+import { data } from './migrations'
 
 const config = {
-  app: "example-app",
-  token: "my-token",
+  app: 'example-app',
+  token: 'my-token',
   replication: {
-    host: "localhost",
+    host: 'localhost',
     port: 5133,
     ssl: false,
   },
   migrations: data.migrations,
   debug: true,
-};
+}
 
-export default config;
+export default config

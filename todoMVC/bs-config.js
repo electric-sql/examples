@@ -3,4 +3,4 @@ module.exports = {
     clicks: false,
     forms: false,
   },
-};
+}
