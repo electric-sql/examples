@@ -25,37 +25,33 @@ git clone https://github.com/electric-sql/examples
 cd examples/todoMVC
 ```
 
-Install the dependencies, either using Yarn:
+Install the dependencies:
+
 
 ```sh
 yarn
 ```
 
-Or using npm:
-
-```sh
-npm install
-```
-
 ## Run
 
-Build:
+Build and run:
 
-```sh
-yarn build
-```
-
-Run:
 
 ```sh
 yarn start
+
 ```
 
 ## Sync
 
-The application is setup to autmatically sync via the cloud (when connected).
 
-Open [localhost:3000](http://localhost:3000) in two different browsers (so they're backed by different databases) and try it out. You'll see data being replicated between the client applications.
+The application is setup to automatically sync via the cloud (when connected).
+
+
+
+Open [localhost:3001](http://localhost:3001) in two different browsers (so they're backed by different databases) and try it out. You'll see data being replicated between the client applications.
+
+
 
 See [Running the Examples](https://electric-sql.com/docs/overview/examples) for information on how to:
 
