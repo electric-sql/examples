@@ -1,5 +1,4 @@
 import { Database } from 'electric-sql/browser'
-import { Data } from 'electric-sql/dist/sockets'
 import { Todo } from './model'
 
 type Filter = {
@@ -18,7 +17,6 @@ export class TodoRepository {
     const sql = 'INSERT INTO todo(id, listid, text) VALUES (?, ?, ?)'
     const args = [todo.id, todo.listid, todo.text]
 
-    console.log(`SQL: ${sql}, ${args}`)
     return this.db.run(sql, args)
   }
 
@@ -26,7 +24,6 @@ export class TodoRepository {
     const sql = 'UPDATE todo SET text = ?, completed = ? WHERE id = ?'
     const args = [todo.text, todo.completed ? 1 : 0, todo.id]
 
-    console.log(`SQL: ${sql}, ${args}`)
     return this.db.run(sql, args)
   }
 
@@ -34,7 +31,6 @@ export class TodoRepository {
     const sql = 'UPDATE todo SET completed = ? WHERE listid = ?'
     const args = [filter.completed ? 1 : 0, filter.listid]
 
-    console.log(`SQL: ${sql}, ${args}`)
     return this.db.run(sql, args)
   }
 
@@ -42,7 +38,6 @@ export class TodoRepository {
     const sql = 'DELETE FROM todo WHERE id = ?'
     const args = [todo.id]
 
-    console.log(`SQL: ${sql}, ${args}`)
     return this.db.run(sql, args)
   }
 
@@ -50,7 +45,6 @@ export class TodoRepository {
     const sql = 'DELETE FROM todo WHERE completed = ?'
     const args = [filter.completed ? 1 : 0]
 
-    console.log(`SQL: ${sql}, ${args}`)
     return this.db.run(sql, args)
   }
 
@@ -71,10 +65,7 @@ export class TodoRepository {
       sql = sql + ' WHERE ' + where.join(' AND ')
     }
 
-    console.log(`SQL: ${sql} ${args}`)
-
     const res = await this.db.exec(sql, args)
-    console.log(`res: ${JSON.stringify(res)}`)
 
     if (res.length == 0) {
       return []

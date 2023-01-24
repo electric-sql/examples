@@ -37,7 +37,6 @@ export class TodoListRepository {
       todoList.editing ? todoList.editing : '',
     ]
 
-    console.log(`SQL: ${sql}, ${args}`)
     return this.db.run(sql, args)
   }
 
@@ -63,7 +62,6 @@ export class TodoListRepository {
 
     const sql = `UPDATE todolist SET ${set.join(' , ')} WHERE id = ?`
 
-    console.log(`SQL: ${sql}, ${args}`)
     return this.db.run(sql, args)
   }
 }

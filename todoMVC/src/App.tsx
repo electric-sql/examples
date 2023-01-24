@@ -29,9 +29,6 @@ type Repositories = {
 
 type createTodo = (text: string, completed?: boolean) => Promise<Database>
 
-// for holding a debug context available on global scope
-const debugContext: Debug.DebugContext = new Object()
-
 const worker = new Worker('./worker.js', { type: 'module' })
 
 function Header({ createTodo }: { createTodo: createTodo }) {
@@ -296,9 +293,6 @@ function TodoMVC({
         <button className="button" onClick={toggleConnectivityState}>
           {buttonText(connectivityState)}
         </button>
-        {debugContext.electric ? (
-          <div style={{ padding: '0px 5px 5px' }}>clientId: {clientId}</div>
-        ) : null}
       </div>
     </div>
   )
@@ -317,26 +311,11 @@ function ElectrifiedTodoMVC() {
       })
       const electrified = await SQL.openDatabase('todoMVC.db', config)
 
-      if (config.debug) {
-        Debug.init(electrified, debugContext)
-      }
-
       const todoRepo = new TodoRepository(electrified)
       const todoListRepo = new TodoListRepository(electrified)
 
       setDb(electrified)
       setRepositories({ todoRepo, todoListRepo })
-
-      // need a better way of exposing the internal clientId.
-      if (debugContext.query) {
-        const clientId =
-          ((
-            await debugContext.query(
-              `SELECT value FROM _electric_meta WHERE key = 'clientId'`
-            )
-          )[0].value as string) ?? ''
-        setClientId(clientId)
-      }
 
       let todoList = await todoListRepo.getById(clientId)
       if (!todoList) {
