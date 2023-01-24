@@ -9,7 +9,7 @@
     "check-styleguide": "prettier --check --loglevel warn . && eslint src --quiet",
     "build": "node builder.js",
     "build-prod": "NODE_ENV=production node builder.js",
-    "start": "npx lite-server --baseDir=dist"
+    "start": "SERVE=true node builder.js"
   },
   "dependencies": {
     "@aphro/absurd-sql": "^0.0.53",
@@ -32,7 +32,6 @@
     "esbuild-plugin-inline-image": "^0.0.8",
     "eslint": "^8.32.0",
     "eslint-plugin-react": "^7.32.1",
-    "lite-server": "^2.6.1",
     "prettier": "^2.8.3",
     "typescript": "^4.4.3"
   }
