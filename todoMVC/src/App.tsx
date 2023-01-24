@@ -20,8 +20,7 @@ import {
   resultsToTodoList,
   TodoList,
 } from './model/todolist/model'
-import config from '../electric-config'
-import * as Debug from 'electric-sql/debug'
+import config from '../.electric/@config'
 
 type Repositories = {
   todoRepo: TodoRepository

@@ -1,0 +1,14 @@
+{
+  "app": "cotton-november-9790",
+  "debug": false,
+  "defaultEnv": "default",
+  "directories": {
+    "migrations": "migrations",
+    "output": ".electric"
+  },
+  "environments": {
+    "default": {
+      "slug": "default"
+    }
+  }
+}
