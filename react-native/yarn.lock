@@ -2488,6 +2488,13 @@ cosmiconfig@^5.0.5, cosmiconfig@^5.1.0:
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
 
+cross-fetch@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.5.tgz#e1389f44d9e7ba767907f7af8454787952ab534f"
+  integrity sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==
+  dependencies:
+    node-fetch "2.6.7"
+
 cross-spawn@^6.0.0:
   version "6.0.5"
   resolved "https://registry.npmjs.org/cross-spawn/-/cross-spawn-6.0.5.tgz"
@@ -2688,12 +2695,13 @@ ee-first@1.1.1:
   resolved "https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz"
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
-electric-sql@^0.3.7:
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/electric-sql/-/electric-sql-0.3.7.tgz#fe29b3ff3a66aea3602760b471fb0e42f71d6dc0"
-  integrity sha512-bZ5s1jC3H/dUAlgI3j1O2oVUh5+eptwL8TUpjM1iFkNYOUlUoXiAmGXowsxyxjziqY15dYFcRdUhd+2FUECBdg==
+electric-sql@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/electric-sql/-/electric-sql-0.4.1.tgz#01800da634462f787e3c9347021c1c9f9842b1ab"
+  integrity sha512-2/F6TipEvQxBaFHdtMPYgIdfZAvIn+Wio6j/U2xtIizrS5FwQU5nUmIxwYnr+UrHMwkUrb4U1EYXp3I00IBwEA==
   dependencies:
     base-64 "^1.0.0"
+    cross-fetch "^3.1.5"
     events "^3.3.0"
     exponential-backoff "^3.1.0"
     fastestsmallesttextencoderdecoder "^1.0.22"
@@ -5334,9 +5342,9 @@ node-dir@^0.1.17:
   dependencies:
     minimatch "^3.0.2"
 
-node-fetch@^2.2.0, node-fetch@^2.6.0:
+node-fetch@2.6.7, node-fetch@^2.2.0, node-fetch@^2.6.0:
   version "2.6.7"
-  resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.7.tgz"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
   dependencies:
     whatwg-url "^5.0.0"
