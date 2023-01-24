@@ -11,7 +11,7 @@ Write your SQLite migration below.
 CREATE TABLE "todolist" (
     "id" TEXT NOT NULL,
     "filter" TEXT,
-    "editing" INTEGER,
+    "editing" TEXT,
     PRIMARY KEY ("id")
 ) WITHOUT ROWID;
 
