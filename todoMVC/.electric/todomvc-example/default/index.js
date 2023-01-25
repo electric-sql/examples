@@ -7,7 +7,7 @@
 */
 
 export default {
-  "app": "debonair-navy-9026",
+  "app": "todomvc-example",
   "build": "server",
   "env": "default",
   "migrations": [

@@ -1,5 +1,5 @@
 {
-  "app": "debonair-navy-9026",
+  "app": "todomvc-example",
   "migrations": [
     {
       "encoding": "escaped",
