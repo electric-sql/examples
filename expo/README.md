@@ -14,7 +14,7 @@
 
 # ElectricSQL - Expo example
 
-This is an example mobile app using [Expo](https://expo.de) with the [expo-sqlite](https://docs.expo.dev/versions/latest/sdk/sqlite/) driver.
+This is an example mobile app using [Expo](https://expo.dev) with the [expo-sqlite](https://docs.expo.dev/versions/latest/sdk/sqlite/) driver.
 
 ## Pre-reqs
 
