@@ -7,19 +7,24 @@
   "scripts": {
     "lint": "eslint src --fix",
     "check-styleguide": "prettier --check --loglevel warn . && eslint src --quiet",
-    "build": "node builder.js",
+    "prepare-generator": "cd ./node_modules/prisma-generator-electric/packages/generator && npm install && npm run build && chmod +x ./dist/bin.js && cd ../../../..",
+    "prepare-wa-sqlite": "cp ./node_modules/wa-sqlite/dist/wa-sqlite-async.mjs ./public/wa-sqlite-async.mjs && cp ./node_modules/wa-sqlite/dist/wa-sqlite-async.wasm ./public/wa-sqlite-async.wasm",
+    "prisma-generate": "npm run prepare-generator && npx prisma generate",
+    "build": "npm run prepare-wa-sqlite && node builder.js",
     "build-prod": "NODE_ENV=production node builder.js",
     "start": "SERVE=true node builder.js"
   },
   "dependencies": {
     "@aphro/absurd-sql": "^0.0.53",
     "@aphro/sql.js": "^1.7.0",
+    "@prisma/client": "4.8.1",
     "base-64": "^1.0.0",
-    "electric-sql": "^0.4.3",
+    "electric-sql": "file:.yalc/electric-sql",
     "fs-extra": "^10.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "wa-sqlite": "rhashimoto/wa-sqlite#breaking-changes"
   },
   "devDependencies": {
     "@types/node": "^16.9.1",
@@ -33,6 +38,8 @@
     "eslint": "^8.32.0",
     "eslint-plugin-react": "^7.32.1",
     "prettier": "^2.8.3",
-    "typescript": "^4.4.3"
+    "prisma": "4.8.1",
+    "typescript": "^4.4.3",
+    "prisma-generator-electric": "electric-sql/prisma-generator-electric#kevindp/build-on-install"
   }
 }

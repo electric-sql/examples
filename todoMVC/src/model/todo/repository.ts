@@ -1,5 +1,6 @@
-import { Database } from 'electric-sql/browser'
 import { Todo } from './model'
+import { dbDescription, todo } from '../../generated/models'
+import { DalTables } from 'electric-sql/client/model'
 
 type Filter = {
   listid: string
@@ -7,76 +8,74 @@ type Filter = {
 }
 
 export class TodoRepository {
-  private db: Database
+  constructor(private db: DalTables<typeof dbDescription>) {}
 
-  constructor(db: Database) {
-    this.db = db
+  async save(todo: Todo): Promise<void> {
+    await this.db.todo.create({
+      data: {
+        ...todo,
+        completed: todo.completed ? 1 : 0
+      }
+    })
   }
 
-  async save(todo: Todo): Promise<Database> {
-    const sql = 'INSERT INTO todo(id, listid, text) VALUES (?, ?, ?)'
-    const args = [todo.id, todo.listid, todo.text]
-
-    return this.db.run(sql, args)
+  async update(todo: Todo): Promise<void> {
+    await this.db.todo.update({
+      data: {
+        text: todo.text,
+        completed: todo.completed ? 1 : 0
+      },
+      where: {
+        id: todo.id
+      }
+    })
   }
 
-  async update(todo: Todo): Promise<Database> {
-    const sql = 'UPDATE todo SET text = ?, completed = ? WHERE id = ?'
-    const args = [todo.text, todo.completed ? 1 : 0, todo.id]
-
-    return this.db.run(sql, args)
+  async updateAll(filter: Filter): Promise<void> {
+    await this.db.todo.updateMany({
+      data: {
+        completed: filter.completed ? 1 : 0
+      },
+      where: {
+        listid: filter.listid
+      }
+    })
   }
 
-  async updateAll(filter: Filter): Promise<Database> {
-    const sql = 'UPDATE todo SET completed = ? WHERE listid = ?'
-    const args = [filter.completed ? 1 : 0, filter.listid]
-
-    return this.db.run(sql, args)
+  async delete(todo: Todo): Promise<void> {
+    await this.db.todo.delete({
+      where: {
+        id: todo.id
+      }
+    })
   }
 
-  async delete(todo: Todo): Promise<Database> {
-    const sql = 'DELETE FROM todo WHERE id = ?'
-    const args = [todo.id]
-
-    return this.db.run(sql, args)
-  }
-
-  async deleteAll(filter: Filter): Promise<Database> {
-    const sql = 'DELETE FROM todo WHERE completed = ?'
-    const args = [filter.completed ? 1 : 0]
-
-    return this.db.run(sql, args)
+  async deleteAll(filter: Filter): Promise<void> {
+    await this.db.todo.deleteMany({
+      where: {
+        completed: filter.completed ? 1 : 0
+      }
+    })
   }
 
   async list(filter: Filter): Promise<Todo[]> {
-    let sql = 'SELECT id, listid, text, completed FROM todo'
-    const where = []
-    const args = []
-    if (filter.listid) {
-      where.push('listid = ?')
-      args.push(filter.listid)
-    }
+    let filters: Partial<todo> = filter.listid ? { listid: filter.listid } : {}
     if (filter.completed != undefined) {
-      where.push('completed = ?')
-      args.push(filter.completed ? 1 : 0)
+      filters = {
+        ...filters,
+        completed: filter.completed ? 1 : 0
+      }
     }
 
-    if (where.length > 0) {
-      sql = sql + ' WHERE ' + where.join(' AND ')
-    }
+    const todos = await this.db.todo.findMany({
+      where: filters
+    })
 
-    const res = await this.db.exec(sql, args)
-
-    if (res.length == 0) {
-      return []
-    }
-
-    const { columns, values } = res[0]
-    return values.map((value) => ({
-      id: value[columns.indexOf('id')] as string,
-      listid: value[columns.indexOf('listid')] as string,
-      text: value[columns.indexOf('text')] as string,
-      completed: Boolean(value[columns.indexOf('completed')]),
-    }))
+    return todos.map(todo => {
+      return {
+        ...todo,
+        completed: Boolean(todo.completed)
+      }
+    })
   }
 }

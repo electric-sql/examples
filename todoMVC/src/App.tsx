@@ -2,15 +2,12 @@ import React, { memo, useCallback, useEffect, useState } from 'react'
 import './style.css'
 
 import { createTodo, resultsToTodos, Todo } from './model/todo/model'
+import { electrify, ElectricDatabase } from 'electric-sql/wa-sqlite'
+import { DalNamespace } from 'electric-sql/client/model'
 import {
-  Database,
-  ElectrifiedDatabase,
-  initElectricSqlJs,
-} from 'electric-sql/browser'
-import {
-  ElectricProvider,
   useConnectivityState,
-  useElectricQuery,
+  makeElectricContext,
+  useLiveQuery
 } from 'electric-sql/react'
 import { TodoRepository } from './model/todo/repository'
 import { TodoListRepository } from './model/todolist/repository'
@@ -21,15 +18,14 @@ import {
   TodoList,
 } from './model/todolist/model'
 import config from '../.electric/@config'
+import { dbDescription, todo } from './generated/models'
 
 type Repositories = {
   todoRepo: TodoRepository
   todoListRepo: TodoListRepository
 }
 
-type createTodo = (text: string, completed?: boolean) => Promise<Database>
-
-const worker = new Worker('./worker.js', { type: 'module' })
+type createTodo = (text: string, completed?: boolean) => Promise<void>
 
 function Header({ createTodo }: { createTodo: createTodo }) {
   const [newText, setNewText] = useState<string>('')
@@ -124,7 +120,7 @@ function Footer({
   todos: Todo[]
   todoList: TodoList
   clearCompleted: () => void
-  updateTodoList: (list: TodoList) => Promise<Database>
+  updateTodoList: (list: TodoList) => Promise<void>
 }) {
   let clearCompletedButton
   if (remaining !== todos.length) {
@@ -181,6 +177,7 @@ function TodoMVC({
   clientId: string
   repositories: Repositories
 }) {
+  const { db } = useElectric()!
   const { connectivityState, toggleConnectivityState } = useConnectivityState()
 
   const startEditing = useCallback(
@@ -200,6 +197,8 @@ function TodoMVC({
 
   const saveTodo = useCallback(
     (todo: Todo, text: string) => {
+      // TODO: this updates the todos and its related to do list.
+      //       Do this with an update query that also updates the related todo list.
       todoRepo.update({ ...todo, text })
       todoListRepo.update({ id: listid, editing: '' })
     },
@@ -216,22 +215,30 @@ function TodoMVC({
   const toggleAll = () =>
     todoRepo.updateAll({ listid, completed: remaining != 0 })
 
-  const updateTodoList = (list: TodoList): Promise<Database> =>
+  const updateTodoList = (list: TodoList): Promise<void> =>
     todoListRepo.update(list)
 
-  const todoListQuery = useElectricQuery(
-    'SELECT id, editing, filter FROM todolist WHERE id = ?',
-    [listid]
+  const todoListQuery = useLiveQuery<TodoList | null>(
+    db.todolist.liveUnique({
+      where: {
+        id: listid
+      }
+    })
   )
-  const todosQuery = useElectricQuery('SELECT * FROM todo WHERE listid = ?', [
-    listid,
-  ])
+
+  const todosQuery = useLiveQuery<todo[]>(
+    db.todo.liveMany({
+      where: {
+        listid: listid
+      }
+    })
+  )
 
   if (!todoListQuery.results || !todosQuery.results) {
     return null
   }
 
-  const todoList = todoListQuery.results.map(resultsToTodoList)[0]
+  const todoList = resultsToTodoList(todoListQuery.results)
   const { all, active, completed } = resultsToTodos(todosQuery.results)
 
   const remaining = active.length
@@ -298,21 +305,23 @@ function TodoMVC({
   )
 }
 
+const { useElectric, ElectricProvider } = makeElectricContext<typeof dbDescription>()
+
 function ElectrifiedTodoMVC() {
   const [clientId, setClientId] = useState<string>('FAKE-CLIENT-ID')
-  const [db, setDb] = useState<ElectrifiedDatabase>()
+  const [db, setDb] = useState<DalNamespace<typeof dbDescription>>()
   const [repositories, setRepositories] = useState<Repositories>()
   const [todoList, setTodoList] = useState<TodoList>()
 
   useEffect(() => {
     const init = async () => {
-      const SQL = await initElectricSqlJs(worker, {
-        locateFile: (file: string) => `/${file}`,
-      })
-      const electrified = await SQL.openDatabase('todoMVC.db', config)
+      // create a wa-sqlite DB
+      const wasql = await ElectricDatabase.init('todoMVC.db', '')
+      // electrify it
+      const electrified = await electrify(wasql, dbDescription, config)
 
-      const todoRepo = new TodoRepository(electrified)
-      const todoListRepo = new TodoListRepository(electrified)
+      const todoRepo = new TodoRepository(electrified.db)
+      const todoListRepo = new TodoListRepository(electrified.db)
 
       setDb(electrified)
       setRepositories({ todoRepo, todoListRepo })
