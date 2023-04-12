@@ -31,6 +31,21 @@ export class TodoRepository {
     })
   }
 
+  async updateTodoAndList(todo: Todo): Promise<void> {
+    await this.db.todo.update({
+      data: {
+        text: todo.text,
+        completed: todo.completed ? 1 : 0,
+        list: {
+          editing: ''
+        }
+      },
+      where: {
+        id: todo.id
+      }
+    })
+  }
+
   async updateAll(filter: Filter): Promise<void> {
     await this.db.todo.updateMany({
       data: {

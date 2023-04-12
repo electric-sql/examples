@@ -197,10 +197,7 @@ function TodoMVC({
 
   const saveTodo = useCallback(
     (todo: Todo, text: string) => {
-      // TODO: this updates the todos and its related to do list.
-      //       Do this with an update query that also updates the related todo list.
-      todoRepo.update({ ...todo, text })
-      todoListRepo.update({ id: listid, editing: '' })
+      todoRepo.updateTodoAndList({ ...todo, text })
     },
     [listid]
   )
