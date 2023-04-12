@@ -37,7 +37,9 @@ export class TodoRepository {
         text: todo.text,
         completed: todo.completed ? 1 : 0,
         list: {
-          editing: ''
+          update: {
+            editing: ''
+          }
         }
       },
       where: {
