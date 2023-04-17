@@ -9,8 +9,10 @@
     "check-styleguide": "prettier --check --loglevel warn . && eslint src --quiet",
     "prepare-generator": "cd ./node_modules/prisma-generator-electric/packages/generator && npm install && npm run build && chmod +x ./dist/bin.js && cd ../../../..",
     "prepare-wa-sqlite": "cp ./node_modules/wa-sqlite/dist/wa-sqlite-async.mjs ./public/wa-sqlite-async.mjs && cp ./node_modules/wa-sqlite/dist/wa-sqlite-async.wasm ./public/wa-sqlite-async.wasm",
+    "prepare-electric": "cd ./node_modules/electric-sql && yarn install && yarn build && rm -rf ./node_modules && cd ../..",
+    "prepare": "npm run prepare-wa-sqlite && npm run prepare-electric",
     "prisma-generate": "npm run prepare-generator && npx prisma generate",
-    "build": "npm run prepare-wa-sqlite && node builder.js",
+    "build": "node builder.js",
     "build-prod": "NODE_ENV=production node builder.js",
     "start": "SERVE=true node builder.js"
   },
@@ -19,17 +21,17 @@
     "@aphro/sql.js": "^1.7.0",
     "@prisma/client": "4.8.1",
     "base-64": "^1.0.0",
-    "electric-sql": "file:.yalc/electric-sql",
+    "electric-sql": "electric-sql/typescript-client#kevindp/fk-relations-dal-generation",
     "fs-extra": "^10.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "uuid": "^9.0.0",
     "wa-sqlite": "rhashimoto/wa-sqlite#breaking-changes"
   },
   "devDependencies": {
     "@types/node": "^16.9.1",
-    "@types/react": "^17.0.20",
-    "@types/react-dom": "^17.0.9",
+    "@types/react": "^18.0.18",
+    "@types/react-dom": "^18.0.11",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
@@ -39,7 +41,7 @@
     "eslint-plugin-react": "^7.32.1",
     "prettier": "^2.8.3",
     "prisma": "4.8.1",
-    "typescript": "^4.4.3",
-    "prisma-generator-electric": "electric-sql/prisma-generator-electric#kevindp/build-on-install"
+    "prisma-generator-electric": "electric-sql/prisma-generator-electric#kevindp/vax-627-modify-hkt",
+    "typescript": "^4.4.3"
   }
 }

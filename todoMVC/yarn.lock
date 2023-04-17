@@ -69,6 +69,23 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@prisma/client@4.8.1":
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/@prisma/client/-/client-4.8.1.tgz#51c16488dfac4e74a275a2753bf20262a65f2a2b"
+  integrity sha512-d4xhZhETmeXK/yZ7K0KcVOzEfI5YKGGEr4F5SBV04/MU4ncN/HcE28sy3e4Yt8UFW0ZuImKFQJE+9rWt9WbGSQ==
+  dependencies:
+    "@prisma/engines-version" "4.8.0-61.d6e67a83f971b175a593ccc12e15c4a757f93ffe"
+
+"@prisma/engines-version@4.8.0-61.d6e67a83f971b175a593ccc12e15c4a757f93ffe":
+  version "4.8.0-61.d6e67a83f971b175a593ccc12e15c4a757f93ffe"
+  resolved "https://registry.yarnpkg.com/@prisma/engines-version/-/engines-version-4.8.0-61.d6e67a83f971b175a593ccc12e15c4a757f93ffe.tgz#30401aba1029e7d32e3cb717e705a7c92ccc211e"
+  integrity sha512-MHSOSexomRMom8QN4t7bu87wPPD+pa+hW9+71JnVcF3DqyyO/ycCLhRL1we3EojRpZxKvuyGho2REQsMCvxcJw==
+
+"@prisma/engines@4.8.1":
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-4.8.1.tgz#8428f7dcd7912c6073024511376595017630dc85"
+  integrity sha512-93tctjNXcIS+i/e552IO6tqw17sX8liivv8WX9lDMCpEEe3ci+nT9F+1oHtAafqruXLepKF80i/D20Mm+ESlOw==
+
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@protobufjs/aspromise/-/aspromise-1.1.2.tgz#9b8b0cc663d669a7d8f6f5d0893a14d348f30fbf"
@@ -142,17 +159,17 @@
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.5.tgz"
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
 
-"@types/react-dom@^17.0.9":
-  version "17.0.17"
-  resolved "https://registry.npmjs.org/@types/react-dom/-/react-dom-17.0.17.tgz"
-  integrity sha512-VjnqEmqGnasQKV0CWLevqMTXBYG9GbwuE6x3VetERLh0cq2LTptFE73MrQi2S7GkKXCf2GgwItB/melLnxfnsg==
+"@types/react-dom@^18.0.11":
+  version "18.0.11"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.11.tgz#321351c1459bc9ca3d216aefc8a167beec334e33"
+  integrity sha512-O38bPbI2CWtgw/OoQoY+BRelw7uysmXbWvw3nLWO21H1HSh+GOlqPuXshJfjmpNlKiiSDG9cc1JZAaMmVdcTlw==
   dependencies:
-    "@types/react" "^17"
+    "@types/react" "*"
 
-"@types/react@^17", "@types/react@^17.0.20":
-  version "17.0.51"
-  resolved "https://registry.npmjs.org/@types/react/-/react-17.0.51.tgz"
-  integrity sha512-YMddzAE+nSH04BiTJ5GydTxk0/3hckqyuOclg0s6zQYj/XzfRVNzHZAFwZb5SCSavkzTYUtcq/gwjLnvt2Y4cg==
+"@types/react@*", "@types/react@^18.0.18":
+  version "18.0.35"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.35.tgz#192061cb1044fe01f2d3a94272cd35dd50502741"
+  integrity sha512-6Laome31HpetaIUGFWl1VQ3mdSImwxtFZ39rh059a1MNnKGqBpC88J6NJ8n/Is3Qx7CefDGLgf/KhN/sYCf7ag==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -428,7 +445,7 @@ csstype@^3.0.2:
 
 debug@^4.1.1, debug@^4.3.2, debug@^4.3.4:
   version "4.3.4"
-  resolved "https://registry.npmjs.org/debug/-/debug-4.3.4.tgz"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.4.tgz#1319f6579357f2338d3337d2cdd4914bb5dcc865"
   integrity sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==
   dependencies:
     ms "2.1.2"
@@ -467,10 +484,9 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-electric-sql@^0.4.3:
+electric-sql@electric-sql/typescript-client#kevindp/fk-relations-dal-generation:
   version "0.4.3"
-  resolved "https://registry.yarnpkg.com/electric-sql/-/electric-sql-0.4.3.tgz#078eed37c0b13a349460f6fa8d5fa8c7dacdf9b3"
-  integrity sha512-DDmigrXClFB/akwn9lB1MqkI3RbAURvt1tfjWexivu+DF6sfwHDbo6fTxfAotDuRN1E6WMQ89ZDSjiZOWdHK7Q==
+  resolved "https://codeload.github.com/electric-sql/typescript-client/tar.gz/d25993f9692a6de9aa4d27335deae3aedbf40c5b"
   dependencies:
     async-mutex "^0.4.0"
     base-64 "^1.0.0"
@@ -479,15 +495,24 @@ electric-sql@^0.4.3:
     exponential-backoff "^3.1.0"
     fastestsmallesttextencoderdecoder "^1.0.22"
     frame-stream "^3.0.1"
+    lodash.flow "^3.5.0"
+    lodash.groupby "^4.6.0"
+    lodash.mapvalues "^4.6.0"
+    lodash.omitby "^4.6.0"
+    lodash.partition "^4.6.0"
+    lodash.pick "^4.4.0"
     lodash.throttle "^4.1.1"
     loglevel "^1.8.1"
     long "^5.2.0"
+    object.hasown "^1.1.2"
     protobufjs "^7.1.1"
     react-native-uuid "^2.0.1"
     sqlite-parser "^1.0.1"
+    squel "^5.13.0"
     uuid "^9.0.0"
     walkjs "^3.2.4"
     ws "^8.8.1"
+    zod "^3.20.2"
 
 es-abstract@^1.19.0, es-abstract@^1.20.4:
   version "1.21.1"
@@ -1189,10 +1214,40 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
+lodash.flow@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.flow/-/lodash.flow-3.5.0.tgz#87bf40292b8cf83e4e8ce1a3ae4209e20071675a"
+  integrity sha512-ff3BX/tSioo+XojX4MOsOMhJw0nZoUEF011LX8g8d3gvjVbxd89cCio4BCXronjxcTUIJUoqKEUA+n4CqvvRPw==
+
+lodash.groupby@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/lodash.groupby/-/lodash.groupby-4.6.0.tgz#0b08a1dcf68397c397855c3239783832df7403d1"
+  integrity sha512-5dcWxm23+VAoz+awKmBaiBvzox8+RqMgFhi7UvX9DHZr2HdxHXM/Wrf8cfKpsW37RNrvtPn6hSwNqurSILbmJw==
+
+lodash.mapvalues@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/lodash.mapvalues/-/lodash.mapvalues-4.6.0.tgz#1bafa5005de9dd6f4f26668c30ca37230cc9689c"
+  integrity sha512-JPFqXFeZQ7BfS00H58kClY7SPVeHertPE0lNuCyZ26/XlN8TvakYD7b9bGyNmXbT/D3BbtPAAmq90gPWqLkxlQ==
+
 lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
+
+lodash.omitby@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/lodash.omitby/-/lodash.omitby-4.6.0.tgz#5c15ff4754ad555016b53c041311e8f079204791"
+  integrity sha512-5OrRcIVR75M288p4nbI2WLAf3ndw2GD9fyNv3Bc15+WCxJDdZ4lYndSxGd7hnG6PVjiJTeJE2dHEGhIuKGicIQ==
+
+lodash.partition@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/lodash.partition/-/lodash.partition-4.6.0.tgz#a38e46b73469e0420b0da1212e66d414be364ba4"
+  integrity sha512-35L3dSF3Q6V1w5j6V3NhNlQjzsRDC/pYKCTdYTmwqSib+Q8ponkAmt/PwEOq3EmI38DSCl+SkIVwLd+uSlVdrg==
+
+lodash.pick@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/lodash.pick/-/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
+  integrity sha512-hXt6Ul/5yWjfklSGvLQl8vM//l3FtyHZeuelpzK6mm99pNvN9yTDruNZPEJZD1oWrqo+izBmB7oUfWgcCX7s4Q==
 
 lodash.throttle@^4.1.1:
   version "4.1.1"
@@ -1405,6 +1460,19 @@ prettier@^2.8.3:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.3.tgz#ab697b1d3dd46fb4626fbe2f543afe0cc98d8632"
   integrity sha512-tJ/oJ4amDihPoufT5sM0Z1SKEuKay8LfVAMlbbhnnkvt6BUserZylqo2PN+p9KeljLr0OHa2rXHU1T8reeoTrw==
 
+prisma-generator-electric@electric-sql/prisma-generator-electric#kevindp/vax-627-modify-hkt:
+  version "1.0.0"
+  resolved "https://codeload.github.com/electric-sql/prisma-generator-electric/tar.gz/d13be143b4e359dda255ed657af59e702879742a"
+  dependencies:
+    turbo "^1.8.3"
+
+prisma@4.8.1:
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/prisma/-/prisma-4.8.1.tgz#ef93cd908809b7d02e9f4bead5eea7733ba50c68"
+  integrity sha512-ZMLnSjwulIeYfaU1O6/LF6PEJzxN5par5weykxMykS9Z6ara/j76JH3Yo2AH3bgJbPN4Z6NeCK9s5fDkzf33cg==
+  dependencies:
+    "@prisma/engines" "4.8.1"
+
 prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
@@ -1442,14 +1510,13 @@ queue-microtask@^1.2.2:
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
-react-dom@^17.0.2:
-  version "17.0.2"
-  resolved "https://registry.npmjs.org/react-dom/-/react-dom-17.0.2.tgz"
-  integrity sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==
+react-dom@^18.2.0:
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"
+  integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
   dependencies:
     loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    scheduler "^0.20.2"
+    scheduler "^0.23.0"
 
 react-is@^16.13.1:
   version "16.13.1"
@@ -1461,13 +1528,12 @@ react-native-uuid@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-native-uuid/-/react-native-uuid-2.0.1.tgz#ed4e2dfb1683eddb66967eb5dca140dfe1abddb9"
   integrity sha512-cptnoIbL53GTCrWlb/+jrDC6tvb7ypIyzbXNJcpR3Vab0mkeaaVd5qnB3f0whXYzS+SMoSQLcUUB0gEWqkPC0g==
 
-react@^17.0.2:
-  version "17.0.2"
-  resolved "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
-  integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
+react@^18.2.0:
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
+  integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
   dependencies:
     loose-envify "^1.1.0"
-    object-assign "^4.1.1"
 
 regexp.prototype.flags@^1.4.3:
   version "1.4.3"
@@ -1530,13 +1596,12 @@ safe-regex-test@^1.0.0:
     get-intrinsic "^1.1.3"
     is-regex "^1.1.4"
 
-scheduler@^0.20.2:
-  version "0.20.2"
-  resolved "https://registry.npmjs.org/scheduler/-/scheduler-0.20.2.tgz"
-  integrity sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==
+scheduler@^0.23.0:
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.23.0.tgz#ba8041afc3d30eb206a487b6b384002e4e61fdfe"
+  integrity sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==
   dependencies:
     loose-envify "^1.1.0"
-    object-assign "^4.1.1"
 
 semver@^6.3.0:
   version "6.3.0"
@@ -1580,6 +1645,11 @@ sqlite-parser@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/sqlite-parser/-/sqlite-parser-1.0.1.tgz#110183f2682f04ac6c7d8ad09c44446ef976d5ec"
   integrity sha512-/es+YmgQG+VFbwAQD0Nd0Mdzgky8rW3M85zcy2+Vtk3Sj5ydaMl/lopWPehsjsByGw/swVuXSBeMJFh47doRUw==
+
+squel@^5.13.0:
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/squel/-/squel-5.13.0.tgz#09cc73e91f0d0e326482605ee76e3b7ac881ddf6"
+  integrity sha512-Fzd8zqbuqNwzodO3yO6MkX8qiDoVBuwqAaa3eKNz4idhBf24IQHbatBhLUiHAGGl962eGvPVRxzRuFWZlSf49w==
 
 string.prototype.matchall@^4.0.8:
   version "4.0.8"
@@ -1671,6 +1741,48 @@ tsutils@^3.21.0:
   dependencies:
     tslib "^1.8.1"
 
+turbo-darwin-64@1.8.8:
+  version "1.8.8"
+  resolved "https://registry.yarnpkg.com/turbo-darwin-64/-/turbo-darwin-64-1.8.8.tgz#f72b1b6275415b17238f450032c8ef5e5fc71777"
+  integrity sha512-18cSeIm7aeEvIxGyq7PVoFyEnPpWDM/0CpZvXKHpQ6qMTkfNt517qVqUTAwsIYqNS8xazcKAqkNbvU1V49n65Q==
+
+turbo-darwin-arm64@1.8.8:
+  version "1.8.8"
+  resolved "https://registry.yarnpkg.com/turbo-darwin-arm64/-/turbo-darwin-arm64-1.8.8.tgz#8ec78848e0d5978fd732b3588a1b406fdb978839"
+  integrity sha512-ruGRI9nHxojIGLQv1TPgN7ud4HO4V8mFBwSgO6oDoZTNuk5ybWybItGR+yu6fni5vJoyMHXOYA2srnxvOc7hjQ==
+
+turbo-linux-64@1.8.8:
+  version "1.8.8"
+  resolved "https://registry.yarnpkg.com/turbo-linux-64/-/turbo-linux-64-1.8.8.tgz#b1f707b23bc6e22b2894dd8063fc2fa4dbb6ffb9"
+  integrity sha512-N/GkHTHeIQogXB1/6ZWfxHx+ubYeb8Jlq3b/3jnU4zLucpZzTQ8XkXIAfJG/TL3Q7ON7xQ8yGOyGLhHL7MpFRg==
+
+turbo-linux-arm64@1.8.8:
+  version "1.8.8"
+  resolved "https://registry.yarnpkg.com/turbo-linux-arm64/-/turbo-linux-arm64-1.8.8.tgz#34575bdffd2af8c835d9ba3dd9e3a83e0d31dac9"
+  integrity sha512-hKqLbBHgUkYf2Ww8uBL9UYdBFQ5677a7QXdsFhONXoACbDUPvpK4BKlz3NN7G4NZ+g9dGju+OJJjQP0VXRHb5w==
+
+turbo-windows-64@1.8.8:
+  version "1.8.8"
+  resolved "https://registry.yarnpkg.com/turbo-windows-64/-/turbo-windows-64-1.8.8.tgz#73f67969d54269c95cbf7f082e22c20368aedddc"
+  integrity sha512-2ndjDJyzkNslXxLt+PQuU21AHJWc8f6MnLypXy3KsN4EyX/uKKGZS0QJWz27PeHg0JS75PVvhfFV+L9t9i+Yyg==
+
+turbo-windows-arm64@1.8.8:
+  version "1.8.8"
+  resolved "https://registry.yarnpkg.com/turbo-windows-arm64/-/turbo-windows-arm64-1.8.8.tgz#c80b9a170adf6ee028e9dcae45b07755af83f3f2"
+  integrity sha512-xCA3oxgmW9OMqpI34AAmKfOVsfDljhD5YBwgs0ZDsn5h3kCHhC4x9W5dDk1oyQ4F5EXSH3xVym5/xl1J6WRpUg==
+
+turbo@^1.8.3:
+  version "1.8.8"
+  resolved "https://registry.yarnpkg.com/turbo/-/turbo-1.8.8.tgz#8bb331e3f0bd9656b20321339e91e899ad499012"
+  integrity sha512-qYJ5NjoTX+591/x09KgsDOPVDUJfU9GoS+6jszQQlLp1AHrf1wRFA3Yps8U+/HTG03q0M4qouOfOLtRQP4QypA==
+  optionalDependencies:
+    turbo-darwin-64 "1.8.8"
+    turbo-darwin-arm64 "1.8.8"
+    turbo-linux-64 "1.8.8"
+    turbo-linux-arm64 "1.8.8"
+    turbo-windows-64 "1.8.8"
+    turbo-windows-arm64 "1.8.8"
+
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/type-check/-/type-check-0.4.0.tgz#07b8203bfa7056c0657050e3ccd2c37730bab8f1"
@@ -1728,6 +1840,10 @@ uuid@^9.0.0:
   version "9.0.0"
   resolved "https://registry.npmjs.org/uuid/-/uuid-9.0.0.tgz"
   integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
+
+wa-sqlite@rhashimoto/wa-sqlite#breaking-changes:
+  version "0.8.9"
+  resolved "https://codeload.github.com/rhashimoto/wa-sqlite/tar.gz/f4df21531b5f03d7dc2e9b184f75b4fc468a284a"
 
 walkjs@^3.2.4:
   version "3.2.4"
@@ -1803,3 +1919,8 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zod@^3.20.2:
+  version "3.21.4"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.21.4.tgz#10882231d992519f0a10b5dd58a38c9dabbb64db"
+  integrity sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==

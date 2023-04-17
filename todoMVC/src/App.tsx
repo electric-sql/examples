@@ -3,7 +3,7 @@ import './style.css'
 
 import { createTodo, resultsToTodos, Todo } from './model/todo/model'
 import { electrify, ElectricDatabase } from 'electric-sql/wa-sqlite'
-import { DalNamespace } from 'electric-sql/client/model'
+import { ElectricClient } from 'electric-sql/client/model'
 import {
   useConnectivityState,
   makeElectricContext,
@@ -18,7 +18,7 @@ import {
   TodoList,
 } from './model/todolist/model'
 import config from '../.electric/@config'
-import { dbDescription, todo } from './generated/models'
+import {dbSchema, Electric, todo} from './generated/models'
 
 type Repositories = {
   todoRepo: TodoRepository
@@ -302,11 +302,11 @@ function TodoMVC({
   )
 }
 
-const { useElectric, ElectricProvider } = makeElectricContext<typeof dbDescription>()
+const { useElectric, ElectricProvider } = makeElectricContext<Electric>()
 
 function ElectrifiedTodoMVC() {
   const [clientId, setClientId] = useState<string>('FAKE-CLIENT-ID')
-  const [db, setDb] = useState<DalNamespace<typeof dbDescription>>()
+  const [db, setDb] = useState<Electric>()
   const [repositories, setRepositories] = useState<Repositories>()
   const [todoList, setTodoList] = useState<TodoList>()
 
@@ -315,7 +315,7 @@ function ElectrifiedTodoMVC() {
       // create a wa-sqlite DB
       const wasql = await ElectricDatabase.init('todoMVC.db', '')
       // electrify it
-      const electrified = await electrify(wasql, dbDescription, config)
+      const electrified = await electrify(wasql, dbSchema, config)
 
       const todoRepo = new TodoRepository(electrified.db)
       const todoListRepo = new TodoListRepository(electrified.db)

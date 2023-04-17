@@ -1,6 +1,5 @@
 import { Todo } from './model'
-import { dbDescription, todo } from '../../generated/models'
-import { DalTables } from 'electric-sql/client/model'
+import { Electric, todo } from '../../generated/models'
 
 type Filter = {
   listid: string
@@ -8,7 +7,7 @@ type Filter = {
 }
 
 export class TodoRepository {
-  constructor(private db: DalTables<typeof dbDescription>) {}
+  constructor(private db: Electric['db']) {}
 
   async save(todo: Todo): Promise<void> {
     await this.db.todo.create({

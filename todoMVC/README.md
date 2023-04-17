@@ -38,8 +38,9 @@ Build and run:
 
 
 ```sh
-yarn start
-
+yarn prepare # prepares wa-sqlite and electric
+yarn prisma-generate # prepares prisma and generates an Electric client from your Prisma schema
+yarn start # runs the app
 ```
 
 ## Sync

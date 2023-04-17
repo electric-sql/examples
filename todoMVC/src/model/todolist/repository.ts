@@ -1,9 +1,8 @@
 import { TodoList } from './model'
-import { DalTables } from 'electric-sql/dist/client/model'
-import { dbDescription } from '../../generated/models'
+import { Electric } from '../../generated/models'
 
 export class TodoListRepository {
-  constructor(private db: DalTables<typeof dbDescription>) {}
+  constructor(private db: Electric['db']) {}
 
   async getById(listid: string): Promise<TodoList | null> {
     return await this.db.todolist.findUnique({

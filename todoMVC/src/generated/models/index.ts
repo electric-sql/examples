@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import type { Prisma } from '@prisma/client';
-import { TableDescription, DBDescription, Relation } from 'electric-sql/client/model';
+import { TableSchema, DbSchema, Relation, ElectricClient, ClientTables, HKT } from 'electric-sql/client/model';
 
 /////////////////////////////////////////
 // HELPER FUNCTIONS
@@ -984,20 +984,17 @@ export const todolistDeleteManyArgsSchema: z.ZodType<Prisma.todolistDeleteManyAr
   where: todolistWhereInputSchema.optional(),
 }).strict()
 
-declare module 'fp-ts/HKT' {
-  interface URItoKind<A extends boolean | null | undefined | Prisma.todoArgs | Prisma.todolistArgs> {
-    // (Record<string, any> & Prisma.todoArgs) -> the record is needed because Prisma.todoArgs only contains optional fields
-    //                                            so an object only extends it if it provides one of those fields.
-    //                                            but sometimes we do not provide those fields at all in which case it doesn't extend it
-    //                                            therefore if we make it a record it will indeed extend that record
-    //  { data: number } extends { foo?: number } ? true : false  -> is false
-    //  { data: number } extends (Record<string, any> & { foo?: number }) ? true : false  -> is true
-    todoGetPayload: A extends boolean | null | undefined | Record<string, any> & Prisma.todoArgs ? Prisma.todoGetPayload<A> : never
-    todolistGetPayload: A extends boolean | null | undefined | Record<string, any> & Prisma.todolistArgs ? Prisma.todolistGetPayload<A> : never
-  }
+interface todoGetPayload extends HKT {
+  readonly _A?: boolean | null | undefined | Prisma.todoArgs
+  readonly type: Prisma.todoGetPayload<this['_A']>
 }
 
-export const tableDescriptions = {
+interface todolistGetPayload extends HKT {
+  readonly _A?: boolean | null | undefined | Prisma.todolistArgs
+  readonly type: Prisma.todolistGetPayload<this['_A']>
+}
+
+export const tableSchemas = {
   todo: {
     fields: ["id","listid","text","completed"],
     relations: [
@@ -1015,7 +1012,7 @@ export const tableDescriptions = {
     upsertSchema: todoUpsertArgsSchema,
     deleteSchema: todoDeleteArgsSchema,
     deleteManySchema: todoDeleteManyArgsSchema
-  } as TableDescription<
+  } as TableSchema<
     z.infer<typeof todoCreateInputSchema>,
     Prisma.todoCreateArgs['data'],
     Prisma.todoUpdateArgs['data'],
@@ -1025,7 +1022,7 @@ export const tableDescriptions = {
     Omit<Prisma.todoInclude, '_count'>,
     Prisma.todoFindFirstArgs['orderBy'],
     Prisma.TodoScalarFieldEnum,
-    'todoGetPayload'
+    todoGetPayload
   >,
   todolist: {
     fields: ["id","filter","editing"],
@@ -1044,7 +1041,7 @@ export const tableDescriptions = {
     upsertSchema: todolistUpsertArgsSchema,
     deleteSchema: todolistDeleteArgsSchema,
     deleteManySchema: todolistDeleteManyArgsSchema
-  } as TableDescription<
+  } as TableSchema<
     z.infer<typeof todolistCreateInputSchema>,
     Prisma.todolistCreateArgs['data'],
     Prisma.todolistUpdateArgs['data'],
@@ -1054,8 +1051,9 @@ export const tableDescriptions = {
     Omit<Prisma.todolistInclude, '_count'>,
     Prisma.todolistFindFirstArgs['orderBy'],
     Prisma.TodolistScalarFieldEnum,
-    'todolistGetPayload'
+    todolistGetPayload
   >,
 }
 
-export const dbDescription = new DBDescription(tableDescriptions)
+export const dbSchema = new DbSchema(tableSchemas)
+export type Electric = ElectricClient<typeof dbSchema>
