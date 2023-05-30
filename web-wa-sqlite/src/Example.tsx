@@ -1,57 +1,66 @@
 import React, { useEffect, useState } from 'react'
 import './Example.css'
 
-import { start, ElectricDatabase } from 'electric-sql/wa-sqlite'
-import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
+import { dbSchema, Electric } from '../prisma/generated/models'
+import { electrify, ElectricDatabase } from 'electric-sql/wa-sqlite'
+import { makeElectricContext, useLiveQuery } from 'electric-sql/react'
 
 import config from '../.electric/@config'
-import { ElectricNamespace } from "electric-sql"
 
+const { ElectricProvider, useElectric } = makeElectricContext<Electric>()
+
+// Run the local stack
+// Then run this app
+// Then migrate postgres
+// --> app continues to work
+// then close the app (not the back-end)
+// then migrate the app: sh migrate.sh -f prisma/dump.sql -p prisma/schema.prisma
+// then update the app code by uncommenting the commented code below
+// then build and re-run the app: yarn build && yarn start
+// the app now works with the migrated DB :-)
 export const Example = () => {
-  const [ db, setDb ] = useState<ElectricDatabase & { electric: ElectricNamespace }>()
+  const [ electric, setElectric ] = useState<Electric>()
 
   useEffect(() => {
     const init = async () => {
-      const { db, electric } = await start('electric.db', '', config)
-      db.electric = electric // because the hook for live queries expects `electric` to be present on the `db`
-      setDb(db)
+      const conn = await ElectricDatabase.init('electric.db', '/')
+      const db = await electrify(conn, dbSchema, config)
+      setElectric(db)
     }
 
     init()
   }, [])
 
-  if (db === undefined) {
+  if (electric === undefined) {
     return null
   }
 
   return (
-    <ElectricProvider db={db}>
+    <ElectricProvider db={electric}>
       <ExampleComponent />
     </ElectricProvider>
   )
 }
 
 const ExampleComponent = () => {
-  const db = useElectric() as ElectricDatabase & { electric: ElectricNamespace }
-  const electric = db.electric
-  const { results } = useElectricQuery('SELECT value FROM items', [])
+  const { db } = useElectric()!
+  const { results } = useLiveQuery(db.items.liveMany({})) // select all items
 
   const addItem = async () => {
-    await electric.adapter.run({
-        sql: 'INSERT INTO items VALUES(?)',
-        args: [crypto.randomUUID()]
+    await db.items.create({
+      data: {
+        value: crypto.randomUUID(),
+        // uncomment the line below after migration
+        //other_value: crypto.randomUUID(),
       }
-    )
-    electric.notifier.potentiallyChanged() // need to be called manually because the wa-sqlite driver is not proxied
+    })
   }
 
   const clearItems = async () => {
-    await electric.adapter.run({
-      sql : 'DELETE FROM items where true'
-    })
-    electric.notifier.potentiallyChanged() // need to be called manually because the wa-sqlite driver is not proxied
+    await db.items.deleteMany({}) // delete all items
   }
 
+  // After the migration, comment out this code and uncomment code block below
   return (
     <div>
       <div className='controls'>
@@ -69,4 +78,23 @@ const ExampleComponent = () => {
       ))}
     </div>
   )
+
+  // Uncomment after migration
+  //return (
+  //  <div>
+  //    <div className='controls'>
+  //      <button className='button' onClick={addItem}>
+  //        Add
+  //      </button>
+  //      <button className='button' onClick={clearItems}>
+  //        Clear
+  //      </button>
+  //    </div>
+  //    {results && results.map((item: any, index: any) => (
+  //      <p key={ index } className='item'>
+  //        <code>{ item.value } - { item.other_value }</code>
+  //      </p>
+  //    ))}
+  //  </div>
+  //)
 }

@@ -8,8 +8,14 @@
 
 export default {
   "app": "items-example",
-  "build": "server",
-  "env": "default",
+  "build": "local",
+  "console": {
+    "host": "127.0.0.1",
+    "port": 4000,
+    "ssl": false
+  },
+  "debug": false,
+  "env": "local",
   "migrations": [
     {
       "encoding": "escaped",
@@ -40,5 +46,10 @@ export default {
       "sha256": "e4ad678b013b634a667ada6b4094be250bbdd90300457c1f70f3cde78022abc0",
       "title": "create items"
     }
-  ]
+  ],
+  "replication": {
+    "host": "127.0.0.1",
+    "port": 5133,
+    "ssl": false
+  }
 }
