@@ -14,7 +14,7 @@
 
 # ElectricSQL - TodoMVC
 
-This is an example TodoMVC web application using ElectricSQL in the browser with [SQL.js](https://sql.js.org) and [absurd-sql](https://github.com/jlongster/absurd-sql).
+This is an example TodoMVC web application using ElectricSQL in the browser with [wa-sqlite](https://github.com/rhashimoto/wa-sqlite).
 
 ## Install
 
