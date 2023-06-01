@@ -14,7 +14,7 @@
 
 # ElectricSQL - Web example
 
-This is an example web application using ElectricSQL in the browser with with [wa-sqlite](https://github.com/rhashimoto/wa-sqlite).
+This is an example web application using ElectricSQL in the browser with [wa-sqlite](https://github.com/rhashimoto/wa-sqlite).
 
 ## Install
 
