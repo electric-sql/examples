@@ -20,7 +20,7 @@ See the sub folders for the actual applications. These include:
 
 - [expo](./expo) &mdash; example mobile app using [Expo](https://expo.dev) with the [expo-sqlite](https://docs.expo.dev/versions/latest/sdk/sqlite/) driver
 - [react-native](./react-native) &mdash; example mobile app using [React Native](https://reactnative.dev) with the [react-native-sqlite-storage](https://www.npmjs.com/package/react-native-sqlite-storage) driver
-- [web](./web) &mdash; a simple web application using ElectricSQL in the browser with [SQL.js](https://sql.js.org) and [absurd-sql](https://github.com/jlongster/absurd-sql)
+- [web](./web) &mdash; a simple web application using ElectricSQL in the browser with [wa-sqlite](https://github.com/rhashimoto/wa-sqlite)
 
 ## Running the examples
 

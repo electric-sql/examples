@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import './Example.css'
 
-import { ElectrifiedDatabase, initElectricSqlJs } from 'electric-sql/browser'
+import { start, ElectricDatabase } from 'electric-sql/wa-sqlite'
 import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/react'
 
 import config from '../.electric/@config'
-
-const locateOpts = {
-  locateFile: (file: string) => `/${file}`
-}
-
-const worker = new Worker("./worker.js", { type: "module" });
+import { ElectricNamespace } from "electric-sql"
 
 export const Example = () => {
-  const [ db, setDb ] = useState<ElectrifiedDatabase>()
+  const [ db, setDb ] = useState<ElectricDatabase & { electric: ElectricNamespace }>()
 
   useEffect(() => {
     const init = async () => {
-      const SQL = await initElectricSqlJs(worker, locateOpts)
-      const electrified = await SQL.openDatabase('web-example.db', config)
-
-      setDb(electrified)
+      const { db, electric } = await start('electric.db', '', config)
+      db.electric = electric // because the hook for live queries expects `electric` to be present on the `db`
+      setDb(db)
     }
 
     init()
@@ -38,15 +32,24 @@ export const Example = () => {
 }
 
 const ExampleComponent = () => {
-  const db = useElectric() as ElectrifiedDatabase
+  const db = useElectric() as ElectricDatabase & { electric: ElectricNamespace }
+  const electric = db.electric
   const { results } = useElectricQuery('SELECT value FROM items', [])
 
-  const addItem = () => {
-    db.run('INSERT INTO items VALUES(?)', [crypto.randomUUID()])
+  const addItem = async () => {
+    await electric.adapter.run({
+        sql: 'INSERT INTO items VALUES(?)',
+        args: [crypto.randomUUID()]
+      }
+    )
+    electric.notifier.potentiallyChanged() // need to be called manually because the wa-sqlite driver is not proxied
   }
 
-  const clearItems = () => {
-    db.run('DELETE FROM items where true')
+  const clearItems = async () => {
+    await electric.adapter.run({
+      sql : 'DELETE FROM items where true'
+    })
+    electric.notifier.potentiallyChanged() // need to be called manually because the wa-sqlite driver is not proxied
   }
 
   return (

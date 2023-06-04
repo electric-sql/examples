@@ -14,7 +14,7 @@
 
 # ElectricSQL - Web example
 
-This is an example web application using ElectricSQL in the browser with [SQL.js](https://sql.js.org) and [absurd-sql](https://github.com/jlongster/absurd-sql).
+This is an example web application using ElectricSQL in the browser with [wa-sqlite](https://github.com/rhashimoto/wa-sqlite).
 
 ## Install
 
@@ -52,22 +52,19 @@ See [Running the Examples](https://electric-sql.com/docs/overview/examples) for 
 
 ## Notes on the code
 
-Electric uses SQL.js in the browser with absurd-sql for persistence. This runs in a web worker (which we also use to keep background replication off the main thread). As a result, the electrified db client provides an asynchronous version of a subset of the [SQL.js driver interface](https://sql.js.org/documentation).
+In this example, Electric uses wa-sqlite in the browser with IndexedDB for persistence.
 
 The main code to look at is in [`./src/Example.tsx`](./src/Example.tsx):
 
 ```tsx
-const worker = new Worker("./worker.js", { type: "module" });
-
 export const Example = () => {
-  const [ db, setDb ] = useState<ElectrifiedDatabase>()
+  const [ db, setDb ] = useState<ElectricDatabase & { electric: ElectricNamespace }>()
 
   useEffect(() => {
     const init = async () => {
-      const SQL = await initElectricSqlJs(worker, locateOpts)
-      const electrified = await SQL.openDatabase('example.db', config)
-
-      setDb(electrified)
+      const { db, electric } = await start('electric.db', '', config)
+      db.electric = electric // because the hook for live queries expects `electric` to be present on the `db`
+      setDb(db)
     }
 
     init()
@@ -85,19 +82,29 @@ export const Example = () => {
 }
 ```
 
-This spins up a web worker, initialises the persistence machinery, opens an electrified database client and passes it to the application using the React Context API. Components can then use the [`useElectric`](https://electric-sql.com/docs/usage/frameworks#useelectric-hook) and [`useElectricQuery`](https://electric-sql.com/docs/usage/frameworks#useelectricquery-hook) to access the database client and bind reactive queries to the component state.
+This opens an electrified database client and passes it to the application using the React Context API. Components can then use the [`useElectric`](https://electric-sql.com/docs/usage/frameworks#useelectric-hook) and [`useElectricQuery`](https://electric-sql.com/docs/usage/frameworks#useelectricquery-hook) to access the database client and bind reactive queries to the component state.
+This example explicitly calls `potentiallyChanged` on the notifier because unlike the other drivers, the wa-sqlite driver is not proxied.
 
 ```tsx
 const ExampleComponent = () => {
-  const db = useElectric() as ElectrifiedDatabase
+  const db = useElectric() as ElectricDatabase & { electric: ElectricNamespace }
+  const electric = db.electric
   const { results } = useElectricQuery('SELECT value FROM items', [])
 
-  const addItem = () => {
-    db.run('INSERT INTO items VALUES(?)', [crypto.randomUUID()])
+  const addItem = async () => {
+    await electric.adapter.run({
+        sql: 'INSERT INTO items VALUES(?)',
+        args: [crypto.randomUUID()]
+      }
+    )
+    electric.notifier.potentiallyChanged()
   }
 
-  const clearItems = () => {
-    db.run('DELETE FROM items where true')
+  const clearItems = async () => {
+    await electric.adapter.run({
+      sql : 'DELETE FROM items where true'
+    })
+    electric.notifier.potentiallyChanged()
   }
 
   return (
