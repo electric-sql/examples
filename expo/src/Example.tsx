@@ -15,7 +15,7 @@ import {styles} from './Styles'
 
 // Vanilla metro doesn't support symlinks, so we import the config
 // bundle by explicit path rather than `../.electric/@config`.
-import config from '../.electric/items-example/default'
+import config from "../.electric/items-example/local"
 
 export const ElectrifiedExample = () => {
   const [db, setDb] = useState<ElectrifiedDatabase>()
