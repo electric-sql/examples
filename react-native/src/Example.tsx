@@ -14,7 +14,7 @@ import {ElectricProvider, useElectric, useElectricQuery} from 'electric-sql/reac
 import {styles} from './Styles'
 // Vanilla metro doesn't support symlinks, so we import the config
 // bundle by explicit path rather than `../.electric/@config`.
-import config from '../.electric/items-example/default'
+import config from '../.electric/items-example/local'
 
 const promisesEnabled = true
 SQLite.enablePromise(promisesEnabled)
