@@ -8,7 +8,7 @@
 
 export default {
   "app": "items-example",
-  "build": "local",
+  "build": "server",
   "console": {
     "host": "127.0.0.1",
     "port": 4000,
@@ -18,17 +18,17 @@ export default {
   "env": "local",
   "migrations": [
     {
-      "encoding": "escaped",
+      "encoding": null,
       "name": "20230123_193833_152_init",
-      "postgres_body": null,
+      "postgres_body": "-- No SQL here",
       "satellite_body": [],
       "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
       "title": "init"
     },
     {
-      "encoding": "escaped",
+      "encoding": null,
       "name": "20230123_194259_915_create_items",
-      "postgres_body": null,
+      "postgres_body": "\nCREATE TABLE public.items (\n  value text PRIMARY KEY);\nALTER TABLE public.items REPLICA IDENTITY FULL;\n",
       "satellite_body": [
         "CREATE TABLE IF NOT EXISTS items (\n  value TEXT PRIMARY KEY NOT NULL\n) WITHOUT ROWID;",
         "DROP TABLE IF EXISTS _electric_trigger_settings;",
