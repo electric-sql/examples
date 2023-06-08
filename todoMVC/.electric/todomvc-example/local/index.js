@@ -9,20 +9,26 @@
 export default {
   "app": "todomvc-example",
   "build": "server",
-  "env": "default",
+  "console": {
+    "host": "127.0.0.1",
+    "port": 4000,
+    "ssl": false
+  },
+  "debug": false,
+  "env": "local",
   "migrations": [
     {
-      "encoding": "escaped",
+      "encoding": null,
       "name": "20230124_160941_413_init",
-      "postgres_body": null,
+      "postgres_body": "-- No SQL here",
       "satellite_body": [],
       "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
       "title": "init"
     },
     {
-      "encoding": "escaped",
+      "encoding": null,
       "name": "20230124_160958_566_create_todomvc_schema",
-      "postgres_body": null,
+      "postgres_body": "\nCREATE TABLE public.todolist (\n  id text PRIMARY KEY,\n  filter text,\n  editing text);\nALTER TABLE public.todolist REPLICA IDENTITY FULL;\n\nCREATE TABLE public.todo (\n  id text PRIMARY KEY,\n  listid text,\n  text text,\n  completed bigint NOT NULL DEFAULT 0);\nALTER TABLE public.todo REPLICA IDENTITY FULL;\n",
       "satellite_body": [
         "CREATE TABLE \"todolist\" (\n    \"id\" TEXT NOT NULL,\n    \"filter\" TEXT,\n    \"editing\" TEXT,\n    PRIMARY KEY (\"id\")\n) WITHOUT ROWID;",
         "CREATE TABLE \"todo\" (\n    \"id\" TEXT NOT NULL,\n    \"listid\" TEXT,\n    \"text\" TEXT,\n    \"completed\" INTEGER DEFAULT 0 NOT NULL,\n    PRIMARY KEY (\"id\")\n  ) WITHOUT ROWID;",
@@ -50,5 +56,10 @@ export default {
       "sha256": "93193dbaae0539a71847187e38a1240e3888512c1bf833381d0252eb68702f9d",
       "title": "create todoMVC schema"
     }
-  ]
+  ],
+  "replication": {
+    "host": "127.0.0.1",
+    "port": 5133,
+    "ssl": false
+  }
 }
