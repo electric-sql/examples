@@ -12,6 +12,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import './Example.css'
 
+import { genUUID } from 'electric-sql/dist/util/random'
+
 import initSqlJs from '@aphro/sql.js'
 
 const DbContext = React.createContext(undefined)
@@ -79,7 +81,7 @@ const ExampleComponent = () => {
   }, [counter])
 
   const addItem = () => {
-    db.run('INSERT INTO items VALUES(?)', [crypto.randomUUID()])
+    db.run('INSERT INTO items VALUES(?)', [genUUID()])
 
     triggerQuery()
   }

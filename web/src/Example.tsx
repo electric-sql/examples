@@ -7,6 +7,8 @@ import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/re
 import config from '../.electric/@config'
 import { ElectricNamespace } from "electric-sql"
 
+import { genUUID } from 'electric-sql/dist/util/random'
+
 export const Example = () => {
   const [ db, setDb ] = useState<ElectricDatabase & { electric: ElectricNamespace }>()
 
@@ -39,7 +41,7 @@ const ExampleComponent = () => {
   const addItem = async () => {
     await electric.adapter.run({
         sql: 'INSERT INTO items VALUES(?)',
-        args: [crypto.randomUUID()]
+        args: [genUUID()]
       }
     )
     electric.notifier.potentiallyChanged() // need to be called manually because the wa-sqlite driver is not proxied
