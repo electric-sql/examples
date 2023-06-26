@@ -89,7 +89,7 @@ const ExampleComponent = () => {
   const addItem = async () => {
     await electric.adapter.run({
         sql: 'INSERT INTO items VALUES(?)',
-        args: [crypto.randomUUID()]
+        args: [genUUID()]
       }
     )
     electric.notifier.potentiallyChanged()

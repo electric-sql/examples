@@ -30,6 +30,8 @@ import { ElectricProvider, useElectric, useElectricQuery } from 'electric-sql/re
 
 import config from '../.electric/@config'
 
+import { genUUID } from 'electric-sql/dist/util/random'
+
 const locateOpts = {
   locateFile: (file: string) => `/${file}`
 }
@@ -67,7 +69,7 @@ const ExampleComponent = () => {
   const { results } = useElectricQuery('SELECT value FROM items', [])
 
   const addItem = () => {
-    db.run('INSERT INTO items VALUES(?)', [crypto.randomUUID()])
+    db.run('INSERT INTO items VALUES(?)', [genUUID()])
   }
 
   const clearItems = () => {
