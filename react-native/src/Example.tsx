@@ -1,90 +1,125 @@
-import 'react-native-get-random-values'
-import { v4 as uuidv4 } from 'uuid'
+import React, { useEffect, useState } from 'react'
+import { Image, Pressable, Text, View } from 'react-native'
 
-import React, {useEffect, useState} from 'react'
-import {Pressable, Text, View} from 'react-native'
+import SQLite from 'react-native-sqlite-storage'
 
-import SQLite, {SQLiteDatabase} from 'react-native-sqlite-storage'
+import { electrify } from 'electric-sql/react-native'
+import { makeElectricContext, useLiveQuery } from 'electric-sql/react'
+import { genUUID } from 'electric-sql/util'
 
-// Metro does not support package.json exports. Use resolver.
-// https://github.com/facebook/metro/issues/670
-import {Database, ElectrifiedDatabase, electrify} from 'electric-sql/react-native'
-import {ElectricProvider, useElectric, useElectricQuery} from 'electric-sql/react'
+import { authToken } from './auth'
+import { DEBUG_MODE, ELECTRIC_URL } from './config'
+import { Electric, Items as Item, schema } from './generated/client'
+import { styles } from './styles'
 
-import {styles} from './Styles'
-// Vanilla metro doesn't support symlinks, so we import the config
-// bundle by explicit path rather than `../.electric/@config`.
-import config from '../.electric/items-example/local'
+const { ElectricProvider, useElectric } = makeElectricContext<Electric>()
 
 const promisesEnabled = true
 SQLite.enablePromise(promisesEnabled)
 
-export const ElectrifiedExample = () => {
-  const [db, setDb] = useState<ElectrifiedDatabase>()
+export const Example = () => {
+  const [ electric, setElectric ] = useState<Electric>()
 
   useEffect(() => {
-    const init = async () => {
-      const original = await SQLite.openDatabase({name: 'rn-example.db'}) as unknown as Database
+    let isMounted = true
 
-      const electrified = await electrify(original, promisesEnabled, config)
-      setDb(electrified)
+    const init = async () => {
+      const config = {
+        auth: {
+          token: authToken()
+        },
+        debug: DEBUG_MODE,
+        url: ELECTRIC_URL
+      }
+
+      const conn = await SQLite.openDatabase('electric.db')
+      const electric = await electrify(conn, schema, promisesEnabled, config)
+
+      if (!isMounted) {
+        return
+      }
+
+      if (!isMounted) {
+        return
+      }
+
+      setElectric(electric)
     }
 
     init()
+
+    return () => {
+      isMounted = false
+    }
   }, [])
 
-  if (db === undefined) {
+  if (electric === undefined) {
     return null
   }
 
   return (
-    <ElectricProvider db={db}>
+    <ElectricProvider db={electric}>
       <ExampleComponent />
     </ElectricProvider>
   )
 }
 
 const ExampleComponent = () => {
-  const {results, error} = useElectricQuery('SELECT value FROM items', [])
-  const db = useElectric() as ElectrifiedDatabase
+  const { db } = useElectric()!
+  const { results } = useLiveQuery(
+    db.items.liveMany()
+  )
 
-  if (error !== undefined) {
-    return (
-      <View>
-        <Text style={styles.item}>Error: {`${error}`}</Text>
-      </View>
-    )
-  }
+  useEffect(() => {
+    const syncItems = async () => {
+      // Resolves when the shape subscription has been established.
+      const shape = await db.items.sync()
 
-  if (results === undefined) {
-    return null
-  }
+      // Resolves when the data has been synced into the local database.
+      await shape.synced
+    }
 
-  const addItem = () => {
-    db.transaction(tx => {
-      tx.executeSql('INSERT INTO items VALUES(?)', [uuidv4()])
+    syncItems()
+  }, [])
+
+  const addItem = async () => {
+    await db.items.create({
+      data: {
+        value: genUUID(),
+      }
     })
   }
 
   const clearItems = async () => {
-    db.transaction(tx => {
-      tx.executeSql('DELETE FROM items where true', undefined)
-    })
+    await db.items.deleteMany()
   }
+
+  const items: Item[] = results ?? []
 
   return (
     <View>
-      {results && results.map((item: any, index: any) => (
-        <Text key={index} style={styles.item}>
-          Item: {item.value}
-        </Text>
-      ))}
-      <Pressable style={styles.button} onPress={addItem}>
-        <Text style={styles.text}>Add</Text>
-      </Pressable>
-      <Pressable style={styles.button} onPress={clearItems}>
-        <Text style={styles.text}>Clear</Text>
-      </Pressable>
+      <View style={ styles.iconContainer }>
+        <Image source={require('../assets/icon.png')} />
+      </View>
+      <View style={ styles.buttons }>
+        <Pressable style={ styles.button } onPress={ addItem }>
+          <Text style={ styles.text }>
+            Add
+          </Text>
+        </Pressable>
+        <Pressable style={ styles.button } onPress={ clearItems }>
+          <Text style={ styles.text }>
+            Clear
+          </Text>
+        </Pressable>
+      </View>
+      <View style={ styles.items }>
+        {items.map((item: Item, index: number) => (
+          <Text key={ index } style={ styles.item }>
+            Item { index + 1 }
+          </Text>
+        ))}
+      </View>
     </View>
   )
 }
