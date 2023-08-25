@@ -73,12 +73,6 @@ yarn client:generate
 
 ## Run
 
-Run in the Android simulator:
-
-```shell
-yarn start:android
-```
-
 Run in the iOS simulator:
 
 ```shell
